@@ -33,7 +33,7 @@ services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      SA_PASSWORD: your_mssql_sa_password
+      SA_PASSWORD: ${DB_PASSWORD}
       ACCEPT_EULA: Y
       MSSQL_PID: Developer
       # Use values from .env
