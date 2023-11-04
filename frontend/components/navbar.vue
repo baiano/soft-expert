@@ -1,4 +1,21 @@
 <script lang="ts" setup>
+const productsMenu = ref([
+  [{
+    label: 'New Product',
+    icon: 'i-heroicons-plus-circle-20-solid',
+    to: '/product/new',
+  }],
+  [{
+    label: 'All Products',
+    icon: 'i-heroicons-clipboard-document-list-20-solid',
+    to: '/products',
+  }]
+])
+
+const isProductPage = computed(() => {
+  // useRoute().path has /product* in it
+  return useRoute().path.includes('product')
+})
 </script>
 
 <template>
@@ -17,22 +34,34 @@
       <div id="navbar-default" class="hidden w-full md:block md:w-auto">
         <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <li>
-            <NuxtLink to="/">
+            <ULink
+              to="/"
+              active-class="text-primary"
+            >
               Home
-            </NuxtLink>
+            </ULink>
           </li>
           <li>
-            <NuxtLink to="/products">
-              Products
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/logout" class="flex items-center">
-              <UIcon class="pr-7" name="i-solar-logout-broken" />
-              <span>
-                Logout
+            <UDropdown
+              :items="productsMenu"
+              mode="hover"
+              :popper="{ placement: 'bottom-start' }"
+              class="flex items-center"
+            >
+              <!-- if route has /product* it is true -->
+              <span :class="isProductPage ? 'text-primary' : ''">
+                Products
               </span>
-            </NuxtLink>
+              <UIcon class="text-lg pt-6 pl-7" name="i-heroicons-chevron-down-20-solid" />
+            </UDropdown>
+          </li>
+          <li>
+            <ULink
+              to="/logout"
+              inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <UIcon class="pr-7 text-2xl text-primary font-bold" name="i-solar-logout-broken" title="Logout" />
+            </ULink>
           </li>
         </ul>
       </div>
