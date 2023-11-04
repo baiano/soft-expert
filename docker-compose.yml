@@ -3,13 +3,12 @@ services:
   frontend:
     build:
       context: ./frontend
-    stdin_open: true
-    tty: true
     ports:
       - "3000:3000"
     links:
       - backend
       - mssql
+    command: npm run dev
     volumes:
       - ./frontend:/app/
       - publicFolder:/app/.output/public
