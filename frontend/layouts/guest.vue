@@ -1,7 +1,6 @@
 <script setup></script>
 <template>
   <div>
-    <Navbar />
     <UContainer class="p-3">
       <NuxtPage />
     </UContainer>

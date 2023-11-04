@@ -10,4 +10,7 @@ export default defineNuxtConfig({
     ],
     '@nuxt/ui'
   ],
+  ui: {
+    icons: 'all',
+  },
 })
