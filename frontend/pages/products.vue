@@ -1,6 +1,6 @@
 <script setup>
 const store = useProductStore()
-const { products, columns, page, pageCount, searchTerm } = storeToRefs(store)
+const { columns, page, rowsPerPage, searchTerm } = storeToRefs(store)
 </script>
 
 <template>
@@ -13,8 +13,8 @@ const { products, columns, page, pageCount, searchTerm } = storeToRefs(store)
       to="/product/new"
       icon="i-heroicons-plus-circle-20-solid"
     />
-    <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-      <UInput v-model="searchTerm" placeholder="Filter people..." />
+    <div class="flex py-3.5 border-b border-gray-200 dark:border-gray-700">
+      <UInput v-model="searchTerm" placeholder="Filter products..." />
     </div>
     <UTable :columns="columns" :rows="store.getProductsFiltered" :sort="{ column: 'product' }">
       <template #types-data="{ row }">
@@ -29,7 +29,7 @@ const { products, columns, page, pageCount, searchTerm } = storeToRefs(store)
       </template>
     </UTable>
     <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-      <UPagination v-model="page" :page-count="pageCount" :total="products.length" />
+      <UPagination v-model="page" :page-count="rowsPerPage" :total="store.getItemsCount" />
     </div>
   </section>
 </template>
