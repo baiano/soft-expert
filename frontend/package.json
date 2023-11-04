@@ -4,15 +4,30 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "rm -rf /tmp/nitro && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,vue}": [
+      "eslint --fix"
+    ]
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "nuxt": "^3.8.0",
     "vue": "^3.3.7",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "@nuxt/ui": "npm:@nuxt/ui-edge@latest"
+  },
+  "dependencies": {
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@pinia/nuxt": "^0.4.11",
+    "eslint": "^8.53.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "lint-staged": "^15.0.2",
+    "pinia": "^2.1.7"
   }
 }
