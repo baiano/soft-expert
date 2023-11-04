@@ -8,5 +8,6 @@ export default defineNuxtConfig({
         autoImports: ['defineStore', 'acceptHMRUpdate', 'storeToRefs'],
       }
     ],
+    '@nuxt/ui'
   ],
 })
