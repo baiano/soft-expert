@@ -6,3 +6,5 @@
 
 # Ignore environment-specific .env files
 /.env
+
+/public/*
