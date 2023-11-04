@@ -24,6 +24,8 @@
   "dependencies": {
     "eslint": "^8.53.0",
     "eslint-plugin-nuxt": "^4.0.0",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@pinia/nuxt": "^0.4.11",
     "lint-staged": "^15.0.2",
     "pinia": "^2.1.7"
   }
