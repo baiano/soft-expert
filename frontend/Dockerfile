@@ -11,7 +11,7 @@ RUN npm run generate
 
 COPY . .
 
-# EXPOSE 3000
+EXPOSE 3000
 
 # Start the app
-# CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "dev"]
