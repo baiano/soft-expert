@@ -1,0 +1,54 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    links:
+      - backend
+      - mssql
+    command: npm run dev
+    volumes:
+      - ./frontend:/app/
+      - publicFolder:/app/.output/public
+      - /app/node_modules
+    networks:
+      - webapp_network
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    links:
+      - mssql
+    volumes:
+      - ./backend:/app/
+      - publicFolder:/app/public
+    networks:
+      - webapp_network
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: ${DB_PASSWORD}
+      ACCEPT_EULA: Y
+      MSSQL_PID: Developer
+      # Use values from .env
+      MSSQL_DB_HOST: ${DB_HOST}
+      MSSQL_DB_PORT: ${DB_PORT}
+      MSSQL_DB_USER: ${DB_USER}
+      MSSQL_DB_PASSWORD: ${DB_PASSWORD}
+      MSSQL_DB_NAME: ${DB_NAME}
+    ports:
+      - "1433:1433"
+    networks:
+      - webapp_network
+
+networks:
+  webapp_network:
+
+volumes:
+  publicFolder:
+
