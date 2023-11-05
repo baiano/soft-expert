@@ -22,14 +22,7 @@ watch(searchTerm, () => {
         icon="i-heroicons-plus-circle-20-solid"
         class="justify-self-end ml-3"
       />
-      <UButton
-        label="fake products"
-        color="primary"
-        variant="solid"
-        icon="i-heroicons-plus-circle-20-solid"
-        class="justify-self-end ml-3"
-        @click="store.fakeProducts"
-      />
+     
     </div>
     <UTable :columns="columns" :rows="store.getProductsFiltered" :sort="{ column: 'product' }">
       <template #type-data="{ row }">

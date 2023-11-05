@@ -1,6 +1,48 @@
 export const useProductStore = defineStore('productStore', {
   state: () => ({
     products: [
+      {
+        id: 1,
+        product: 'Crispy Fried Onions',
+        type: useTypesStore().types[0],
+        price: 3.47,
+      },
+      {
+        id: 2,
+        product: 'Milk',
+        type: useTypesStore().types[0],
+        price: 1.99,
+      },
+      {
+        id: 3,
+        product: 'Beer',
+        type: useTypesStore().types[4],
+        price: 2.49,
+      },
+      {
+        id: 4,
+        product: 'Rock T-Shirt',
+        type: useTypesStore().types[3],
+        price: 12.99,
+      },
+      {
+        id: 5,
+        product: 'Bananas',
+        type: useTypesStore().types[0],
+        price: 1.49,
+      },
+      {
+        id: 6,
+        product: 'Magic beans',
+        type: useTypesStore().types[5],
+        price: 5.99,
+      },
+      {
+        id: 7,
+        product: 'Potatoes',
+        type: useTypesStore().types[0],
+        price: 2.79,
+      },
     ],
     columns: [{
       key: 'id',
@@ -41,8 +83,7 @@ export const useProductStore = defineStore('productStore', {
     newProduct: {
       product: '',
       type: {
-        type: 'Select',
-        tax: 0,
+        
       },
       price: 0,
     },
