@@ -14,6 +14,8 @@ const validate = (): FormError[] => {
 async function onSubmit (event: FormSubmitEvent<any>) {
   console.log(event.data)
   await products.value.push({ ...event.data, id: products.value.length + 1 })
+  newProduct.value = { product: '', types: [], price: 0 }
+  useRouter().push('/products')
 }
 
 onMounted(() => {

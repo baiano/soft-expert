@@ -99,7 +99,7 @@ export const useProductStore = defineStore('productStore', {
     fakeProducts () {
       const products = []
       const types = useTypesStore().types
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 7; i++) {
         products.push({
           id: i,
           product: `Product ${i}`,
