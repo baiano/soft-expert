@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    Index
+    Page Index
   </div>
 </template>
 
