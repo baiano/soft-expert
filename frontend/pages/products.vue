@@ -2,7 +2,7 @@
 const store = useProductStore()
 const { columns, page, rowsPerPage, searchTerm } = storeToRefs(store)
 function typeName (row) {
-  return row.types.map((type) => type.type).join(', ')
+  return row.type.type
 }
 
 watch(searchTerm, () => {
@@ -32,8 +32,19 @@ watch(searchTerm, () => {
       />
     </div>
     <UTable :columns="columns" :rows="store.getProductsFiltered" :sort="{ column: 'product' }">
-      <template #types-data="{ row }">
+      <template #type-data="{ row }">
         <span class="text-primary">{{ typeName(row) }}</span>
+      </template>
+
+      <template #price-data="{ row }">
+        <span >${{ row.price.toFixed(2) }}</span>
+      </template>
+      
+      <template #tax-data="{ row }">
+        <span >${{ store.calculateTax({...row, quantity: 1}) }}</span>
+      </template>
+      <template #total-data="{ row }">
+        <span class="text-primary">${{ store.calculateTaxedPrice({...row, quantity: 1}) }}</span>
       </template>
       <template #actions-data="{ row }">
         <div class="text-right">

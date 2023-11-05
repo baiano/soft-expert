@@ -10,8 +10,23 @@ export const useProductStore = defineStore('productStore', {
       label: 'Product',
       sortable: true,
     }, {
-      key: 'types',
-      label: 'Types',
+      key: 'type',
+      label: 'Type',
+      sortable: true,
+    },
+    {
+      key: 'price',
+      label: 'Price',
+      sortable: true,
+    },
+    {
+      key: 'tax',
+      label: 'Tax',
+      sortable: true,
+    },
+    {
+      key: 'total',
+      label: 'Total Price',
       sortable: true,
     },
     {
@@ -25,7 +40,10 @@ export const useProductStore = defineStore('productStore', {
     searchTerm: '',
     newProduct: {
       product: '',
-      types: [],
+      type: {
+        type: 'Select',
+        tax: 0,
+      },
       price: 0,
     },
   }),
@@ -64,36 +82,22 @@ export const useProductStore = defineStore('productStore', {
         }]
       ]
     },
-    calculateTaxedPrice (price: number, types: [], quantity: number = 1) {
+    calculateTaxedPrice (product) {
+      if (!product) return 0.00
       let tax = 0
-      const typesStore = useTypesStore()
-      types[0].forEach((type) => {
-        const typeObj = typesStore.types.find((t) => {
-          console.log('t.id', t.id)
-          return t.id === type.id
-        })
-        console.log('typeObj', typeObj)
-        if (typeObj) {
-          tax += typeObj.tax * price * quantity
-        }
+      tax += product.type?.tax * product.price * product.quantity
+      if (!product?.price){
+        tax = 0
       }
-      )
-      return ((price * quantity) + tax).toFixed(2)
+      return ((product.price * product.quantity) + tax).toFixed(2)
     },
-    calculateTax (price: number, types: [], quantity: number = 1) {
+    calculateTax (product) {
       let tax = 0
-      const typesStore = useTypesStore()
-      types[0].forEach((type) => {
-        const typeObj = typesStore.types.find((t) => {
-          console.log('t.id', t.id)
-          return t.id === type.id
-        })
-        console.log('typeObj', typeObj)
-        if (typeObj) {
-          tax += typeObj.tax * price * quantity
-        }
+      console.log('product', product)
+      tax += product.type?.tax * product.price * product.quantity
+      if (!product?.price){
+        tax = 0
       }
-      )
       return tax.toFixed(2)
     },
     fakeProducts () {
@@ -103,7 +107,8 @@ export const useProductStore = defineStore('productStore', {
         products.push({
           id: i,
           product: `Product ${i}`,
-          types: [types[Math.floor(Math.random() * types.length)], types[Math.floor(Math.random() * types.length)]],
+          type: { type: types[Math.floor(Math.random() * types.length)].type, tax: types[Math.floor(Math.random() * types.length)].tax },
+          price: Math.floor(Math.random() * 100),
         })
       }
       this.products = products

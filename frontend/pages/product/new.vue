@@ -29,24 +29,25 @@ onMounted(() => {
       <UInput v-model="newProduct.product" maxlength="10" />
     </UFormGroup>
 
-    <UFormGroup class="pb-3" label="Types" name="types">
+    <UFormGroup class="pb-3" label="Type" name="type">
       <USelectMenu
-        v-model="newProduct.types"
+        v-model="newProduct.type"
         searchable
-        multiple
         searchable-placeholder="Search a type..."
-        class="w-full lg:w-40"
+        class="w-full h-max"
         placeholder="Select a type"
         :options="useTypesStore().types"
         option-attribute="type"
-      />
+      >
+     
+      </USelectMenu>
     </UFormGroup>
 
     <UFormGroup class="pb-3" label="Price" name="price">
       <UInput v-model.number="newProduct.price" />
     </UFormGroup>
-    <span class="block">Tax: ${{ store.calculateTax(newProduct.price, [newProduct.types]) }} </span>
-    <span class="block pb-3">Total price: ${{ store.calculateTaxedPrice(newProduct.price, [newProduct.types]) }} </span>
+    <span class="block">Tax: ${{ store.calculateTax({...newProduct, quantity: 1}) }} </span>
+    <span class="block pb-3">Total price: ${{ store.calculateTaxedPrice({...newProduct, quantity: 1}) }} </span>
 
     <UButton type="submit">
       Save
