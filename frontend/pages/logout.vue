@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    Page Index
+    Page: foo
   </div>
 </template>
 

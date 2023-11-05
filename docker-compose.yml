@@ -6,7 +6,6 @@ services:
     ports:
       - "3000:3000"
     links:
-      - backend
       - mssql
     command: npm run dev
     volumes:
@@ -15,20 +14,19 @@ services:
       - /app/node_modules
     networks:
       - webapp_network
-
-  backend:
+  server:
     build:
-      context: ./backend
+      context: .
     ports:
       - "8080:8080"
     links:
+      - frontend
       - mssql
     volumes:
-      - ./backend:/app/
-      - publicFolder:/app/public
+      - ./backend:/app/api
+      - ./frontend:/app/frontend
     networks:
       - webapp_network
-
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
@@ -51,4 +49,3 @@ networks:
 
 volumes:
   publicFolder:
-

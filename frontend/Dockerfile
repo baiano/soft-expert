@@ -1,17 +1,14 @@
+FROM node:18 as frontend
 
-FROM node:18
-
-WORKDIR /app
+WORKDIR /app/
 
 COPY package*.json .
 
 RUN npm ci
 
-RUN npm run generate
+# RUN npm run generate
 
-COPY . .
-
-EXPOSE 3000
+# COPY . .
 
 # Start the app
 # CMD ["npm", "run", "dev"]
