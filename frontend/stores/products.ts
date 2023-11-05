@@ -77,9 +77,6 @@ export const useProductStore = defineStore('productStore', {
       sortable: false,
       class: 'text-right',
     }],
-    page: 1,
-    rowsPerPage: 5,
-    searchTerm: '',
     newProduct: {
       product: '',
       type: {
@@ -89,22 +86,26 @@ export const useProductStore = defineStore('productStore', {
     },
   }),
   getters: {
-    getProductsPaginated (): {}[] {
-      return this.products.slice((this.page - 1) * this.rowsPerPage, this.page * this.rowsPerPage)
+    getProductsPaginated (state): {}[] {
+      const configStore = useConfigStore()
+      return state.products.slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
     },
     getProductsFiltered (state): {}[] {
-      return this.products
+      const configStore = useConfigStore()
+      return state.products
         .filter((product) => {
         // product includes search term or types include search term
-          return product.product.toLowerCase().includes(this.searchTerm.toLowerCase()) || product.types.some(type => type.type.toLowerCase().includes(this.searchTerm.toLowerCase()))
+          return product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase()) || product.types.some(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
         })
-        .slice((this.page - 1) * this.rowsPerPage, this.page * this.rowsPerPage)
+        .slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
     },
-    getItemsCount (): number {
-      if (this.searchTerm !== '') {
-        return this.products.filter(product => product.product.toLowerCase().includes(this.searchTerm.toLowerCase())).length
+    getItemsCount (state): number {
+      const configStore = useConfigStore()
+
+      if (configStore.searchTerm !== '') {
+        return state.products.filter(product => product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase())).length
       }
-      return this.products.length
+      return state.products.length
     },
   },
   actions: {

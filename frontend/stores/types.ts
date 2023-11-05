@@ -32,6 +32,10 @@ export const useTypesStore = defineStore('typesStore', {
         tax: 0.1,
       },
     ],
+    newType: {
+      type: '',
+      tax: 0,
+    },
   }),
   getters: {
     getTypeNames (state) {

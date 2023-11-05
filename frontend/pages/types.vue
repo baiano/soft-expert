@@ -1,5 +1,5 @@
 <script setup>
-const store = useProductStore()
+const store = useTypesStore()
 const { columns } = storeToRefs(store)
 const configStore = useConfigStore()
 const { page, rowsPerPage, searchTerm } = storeToRefs(configStore)
