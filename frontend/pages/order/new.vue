@@ -39,7 +39,7 @@ onMounted(() => {
         @click="useRouter().push('/types')"
       />
       <div class=" ms-3">
-        <h1>New Product Type</h1>
+        <h1>New Product</h1>
       </div>
     </div>
     <UForm :validate="validate" :state="newType" @submit="onSubmit">

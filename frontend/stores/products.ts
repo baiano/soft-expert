@@ -1,4 +1,4 @@
-export const useProductStore = defineStore('productStore', {
+export const useProductsStore = defineStore('productsStore', {
   state: () => ({
     products: [
       {
@@ -42,7 +42,7 @@ export const useProductStore = defineStore('productStore', {
         product: 'Potatoes',
         type: useTypesStore().types[0],
         price: 2.79,
-      },
+      }
     ],
     columns: [{
       key: 'id',
@@ -80,7 +80,7 @@ export const useProductStore = defineStore('productStore', {
     newProduct: {
       product: '',
       type: {
-        
+
       },
       price: 0,
     },
@@ -125,19 +125,18 @@ export const useProductStore = defineStore('productStore', {
       ]
     },
     calculateTaxedPrice (product) {
-      if (!product) return 0.00
+      if (!product) { return 0.00 }
       let tax = 0
       tax += product.type?.tax * product.price * product.quantity
-      if (!product?.price){
+      if (!product?.price) {
         tax = 0
       }
       return ((product.price * product.quantity) + tax).toFixed(2)
     },
     calculateTax (product) {
       let tax = 0
-      console.log('product', product)
       tax += product.type?.tax * product.price * product.quantity
-      if (!product?.price){
+      if (!product?.price) {
         tax = 0
       }
       return tax.toFixed(2)

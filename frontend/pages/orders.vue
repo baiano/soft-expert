@@ -30,7 +30,7 @@ onMounted(() => {
       />
      
     </div>
-    <UTable :columns="columns" :rows="store.getTypesFiltered" :sort="{ column: 'type' }">
+    <UTable :columns="columns" :rows="store.types" :sort="{ column: 'product' }">
       <template #type-data="{ row }">
         <span class="text-primary">{{ row.type }}</span>
       </template>
@@ -52,7 +52,7 @@ onMounted(() => {
       </template>
     </UTable>
     <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-      <UPagination v-model="page" :page-count="rowsPerPage" :total="store.types.length" />
+      <UPagination v-model="page" :page-count="rowsPerPage" :total="store.getItemsCount" />
     </div>
   </section>
 </template>

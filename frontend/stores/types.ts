@@ -30,8 +30,25 @@ export const useTypesStore = defineStore('typesStore', {
         id: 6,
         type: 'Other',
         tax: 0.1,
-      },
+      }
     ],
+    columns: [{
+      key: 'id',
+      label: 'ID',
+    }, {
+      key: 'type',
+      label: 'Type',
+      sortable: true,
+    }, {
+      key: 'tax',
+      label: 'Tax',
+      sortable: true,
+    }, {
+      key: 'actions',
+      label: 'Actions',
+      sortable: false,
+      class: 'text-right',
+    }],
     newType: {
       type: '',
       tax: 0,
@@ -41,7 +58,23 @@ export const useTypesStore = defineStore('typesStore', {
     getTypeNames (state) {
       return state.types.map(type => type.type)
     },
+    getTypesFiltered (state) {
+      const configStore = useConfigStore()
+      return state.types.filter(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+    },
   },
   actions: {
+    tableActions (row) {
+      return [
+        [{
+          label: 'Edit',
+          icon: 'i-heroicons-pencil-square-20-solid',
+          click: () => console.log('Edit', row.id),
+        }], [{
+          label: 'Delete',
+          icon: 'i-heroicons-trash-20-solid',
+        }]
+      ]
+    },
   },
 })
