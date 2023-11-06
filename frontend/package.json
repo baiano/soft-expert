@@ -17,12 +17,13 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
     "nuxt": "^3.8.0",
     "vue": "^3.3.7",
-    "vue-router": "^4.2.5",
-    "@nuxt/ui": "npm:@nuxt/ui-edge@latest"
+    "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@iconify/json": "^2.2.137",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@pinia/nuxt": "^0.4.11",
     "eslint": "^8.53.0",

@@ -10,4 +10,10 @@ export default defineNuxtConfig({
     ],
     '@nuxt/ui'
   ],
+  imports: {
+    dirs: ['stores'],
+  },
+  ui: {
+    icons: 'all',
+  },
 })
