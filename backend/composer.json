@@ -1,0 +1,17 @@
+{
+    "name": "backend/api",
+    "autoload": {
+        "psr-4": {
+            "Backend\\Api\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Guilherme L. Chaves",
+            "email": "guilhermelchaves@gmail.com"
+        }
+    ],
+    "require": {
+        "pecee/simple-router": "5.3.0.5"
+    }
+}
