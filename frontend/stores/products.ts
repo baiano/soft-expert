@@ -1,4 +1,4 @@
-export const useProductStore = defineStore('productStore', {
+export const useProductsStore = defineStore('productsStore', {
   state: () => ({
     products: [
       {
@@ -42,7 +42,7 @@ export const useProductStore = defineStore('productStore', {
         product: 'Potatoes',
         type: useTypesStore().types[0],
         price: 2.79,
-      },
+      }
     ],
     columns: [{
       key: 'id',
@@ -77,34 +77,35 @@ export const useProductStore = defineStore('productStore', {
       sortable: false,
       class: 'text-right',
     }],
-    page: 1,
-    rowsPerPage: 5,
-    searchTerm: '',
     newProduct: {
       product: '',
       type: {
-        
+
       },
       price: 0,
     },
   }),
   getters: {
-    getProductsPaginated (): {}[] {
-      return this.products.slice((this.page - 1) * this.rowsPerPage, this.page * this.rowsPerPage)
+    getProductsPaginated (state): {}[] {
+      const configStore = useConfigStore()
+      return state.products.slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
     },
     getProductsFiltered (state): {}[] {
-      return this.products
+      const configStore = useConfigStore()
+      return state.products
         .filter((product) => {
         // product includes search term or types include search term
-          return product.product.toLowerCase().includes(this.searchTerm.toLowerCase()) || product.types.some(type => type.type.toLowerCase().includes(this.searchTerm.toLowerCase()))
+          return product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase()) || product.types.some(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
         })
-        .slice((this.page - 1) * this.rowsPerPage, this.page * this.rowsPerPage)
+        .slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
     },
-    getItemsCount (): number {
-      if (this.searchTerm !== '') {
-        return this.products.filter(product => product.product.toLowerCase().includes(this.searchTerm.toLowerCase())).length
+    getItemsCount (state): number {
+      const configStore = useConfigStore()
+
+      if (configStore.searchTerm !== '') {
+        return state.products.filter(product => product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase())).length
       }
-      return this.products.length
+      return state.products.length
     },
   },
   actions: {
@@ -124,19 +125,18 @@ export const useProductStore = defineStore('productStore', {
       ]
     },
     calculateTaxedPrice (product) {
-      if (!product) return 0.00
+      if (!product) { return 0.00 }
       let tax = 0
       tax += product.type?.tax * product.price * product.quantity
-      if (!product?.price){
+      if (!product?.price) {
         tax = 0
       }
       return ((product.price * product.quantity) + tax).toFixed(2)
     },
     calculateTax (product) {
       let tax = 0
-      console.log('product', product)
       tax += product.type?.tax * product.price * product.quantity
-      if (!product?.price){
+      if (!product?.price) {
         tax = 0
       }
       return tax.toFixed(2)

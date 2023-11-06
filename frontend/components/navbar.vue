@@ -14,9 +14,27 @@ const productsMenu = ref([
   }]
 ])
 
+const typesMenu = ref([
+  [{
+    label: 'New Type',
+    icon: 'i-heroicons-plus-circle-20-solid',
+    to: '/type/new',
+  }],
+  [{
+    label: 'All Types',
+    icon: 'i-heroicons-clipboard-document-list-20-solid',
+    to: '/types',
+  }]
+])
+
 const isProductPage = computed(() => {
   // useRoute().path has /product* in it
   return useRoute().path.includes('product')
+})
+
+const isTypePage = computed(() => {
+  // useRoute().path has /product* in it
+  return useRoute().path.includes('type')
 })
 
 </script>
@@ -42,7 +60,20 @@ const isProductPage = computed(() => {
         </svg>
       </button>
       <div id="navbar-default" class="w-full md:block md:w-auto" :class="!isNavbarVisible ? 'hidden' : ''">
-        <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <ul class="font-medium flex flex-col items-center p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <ULink
+              to="/order/new"
+              inactive-class="flex text-white dark:text-white hover:text-gray-700 dark:hover:text-gray-200"
+            >
+              <UButton
+                color="primary"
+                variant="solid"
+                icon="i-heroicons-plus-circle-20-solid"
+                label="New Order"
+              />
+            </ULink>
+          </li>
           <li>
             <ULink
               to="/"
@@ -62,7 +93,21 @@ const isProductPage = computed(() => {
               <span :class="isProductPage ? 'text-primary' : ''">
                 Products
               </span>
-              <UIcon class="text-lg pt-6 pl-7" name="i-heroicons-chevron-down-20-solid" />
+              <UIcon class="text-lg pt-6 " name="i-heroicons-chevron-down-20-solid" />
+            </UDropdown>
+          </li>
+          <li>
+            <UDropdown
+              :items="typesMenu"
+              mode="hover"
+              :popper="{ placement: 'bottom-start' }"
+              class="flex items-center"
+            >
+              <!-- if route has /product* it is true -->
+              <span :class="isTypePage ? 'text-primary' : ''">
+                Types
+              </span>
+              <UIcon class="text-lg pt-6 " name="i-heroicons-chevron-down-20-solid" />
             </UDropdown>
           </li>
           <li>

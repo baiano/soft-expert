@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
-const store = useProductStore()
+const store = useProductsStore()
 const { newProduct, products } = storeToRefs(store)
 
 const validate = (): FormError[] => {
@@ -9,12 +9,10 @@ const validate = (): FormError[] => {
   if (newProduct.value.price === 0) { errors.push({ path: 'price', message: 'Price must be greater than 0' }) }
   if (!newProduct.value.price) { errors.push({ path: 'price', message: 'Required' }) }
   if (!newProduct.value.type?.id) { errors.push({ path: 'type', message: 'Required' }) }
-  console.log('newProduct.type?.id', newProduct.value.type?.id)
   return errors
 }
 
 async function onSubmit (event: FormSubmitEvent<any>) {
-  console.log(event.data)
   await products.value.push({ ...event.data, id: products.value.length + 1 })
   newProduct.value = { product: '', type: {}, price: 0 }
   useRouter().push('/products')
