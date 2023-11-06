@@ -6,16 +6,28 @@ export const useOrdersStore = defineStore('ordersStore', {
       label: 'ID',
     },
     {
-      key: 'total',
-      label: 'Total',
+      key: 'product',
+      label: 'Product',
     },
     {
-      key: 'qty',
+      key: 'quantity',
       label: 'Qty',
     },
     {
-      key: 'createdAt',
-      label: 'Created At',
+      key: 'price',
+      label: 'Price un.',
+    },
+    {
+      key: 'value',
+      label: 'Value',
+    },
+    {
+      key: 'tax',
+      label: 'Tax',
+    },
+    {
+      key: 'total',
+      label: 'Total',
     },
     {
       key: 'actions',
@@ -28,20 +40,64 @@ export const useOrdersStore = defineStore('ordersStore', {
     },
   }),
   getters: {
+    getOrdersFiltered (state) {
+      const configStore = useConfigStore()
+      // filter if order.product.product contains configStore.searchTerm
+      return state.orders.filter(order => order.products.some((row) => {
+        return row.product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase())
+      }
+
+      ))
+    },
 
   },
   actions: {
-    tableActions (row) {
+    tableActions () {
       return [
         [{
-          label: 'Edit',
-          icon: 'i-heroicons-pencil-square-20-solid',
-          click: () => console.log('Edit', row.id),
-        }], [{
-          label: 'Delete',
-          icon: 'i-heroicons-trash-20-solid',
+          label: 'Cancel item',
+          icon: 'i-heroicons-x-circle-20-solid',
         }]
       ]
+    },
+    saveOrder () {
+      this.newOrder.id = this.orders.length + 1
+      this.orders.push(this.newOrder)
+      this.newOrder = {
+        products: [],
+      }
+    },
+    productsQuantity (products) {
+      // calculate considering quantity
+      let acc = 0
+      products.forEach((product) => {
+        acc += parseInt(product.quantity)
+      })
+      return acc
+    },
+    calculateOrderTotal (order) {
+      // calculate considering price * quantity + tax * quantity
+      let acc = 0
+      order.products.forEach((product) => {
+        acc += parseInt(product.quantity) * (parseFloat(product.product.price) + parseFloat(product.product.type.tax * product.product.price))
+      })
+      return acc
+    },
+    calculateOrderTax (order) {
+      // calculate considering tax * quantity
+      let acc = 0
+      order.products.forEach((product) => {
+        acc += parseInt(product.quantity) * parseFloat(product.product.type.tax * product.product.price)
+      })
+      return acc
+    },
+    calculateOrderValue (order) {
+      // calculate considering price * quantity
+      let acc = 0
+      order.products.forEach((product) => {
+        acc += parseInt(product.quantity) * parseFloat(product.product.price)
+      })
+      return acc
     },
   },
 })

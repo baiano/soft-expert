@@ -16,7 +16,6 @@ const lastFiveProducts = products.value.slice(-5)
   <div class="grid grid-cols-2 gap-5 justify-center">
     <DashboardInfoBox :icon="'i-heroicons-shopping-cart-20-solid'" :number="products.length" title="Total Products:" />
     <DashboardInfoBox :icon="'i-heroicons-shopping-cart-20-solid'" :number="orders.length" title="Orders:" />
-  
 
     <UCard class="col-span-2">
       <div class="flex items-center">
@@ -34,8 +33,10 @@ const lastFiveProducts = products.value.slice(-5)
           class="text-sm font-bold"
           :to="{ name: 'products' }"
           :label="'See all'"
-        >See all</ULink>
-        </div>  
+        >
+          See all
+        </ULink>
+      </div>
     </UCard>
   </div>
 </template>
