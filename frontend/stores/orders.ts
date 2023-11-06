@@ -6,16 +6,28 @@ export const useOrdersStore = defineStore('ordersStore', {
       label: 'ID',
     },
     {
-      key: 'total',
-      label: 'Total',
+      key: 'product',
+      label: 'Product',
     },
     {
-      key: 'qty',
+      key: 'type',
+      label: 'Type',
+    },
+    {
+      key: 'quantity',
       label: 'Qty',
     },
     {
-      key: 'createdAt',
-      label: 'Created At',
+      key: 'price',
+      label: 'Price',
+    },
+    {
+      key: 'tax',
+      label: 'Tax',
+    },
+    {
+      key: 'total',
+      label: 'Total',
     },
     {
       key: 'actions',
@@ -33,13 +45,9 @@ export const useOrdersStore = defineStore('ordersStore', {
   actions: {
     tableActions (row) {
       return [
-        [{
-          label: 'Edit',
-          icon: 'i-heroicons-pencil-square-20-solid',
-          click: () => console.log('Edit', row.id),
-        }], [{
-          label: 'Delete',
-          icon: 'i-heroicons-trash-20-solid',
+         [{
+          label: 'Cancel item',
+          icon: 'i-heroicons-x-circle-20-solid',
         }]
       ]
     },
