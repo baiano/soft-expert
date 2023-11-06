@@ -83,6 +83,14 @@ const isTypePage = computed(() => {
             </ULink>
           </li>
           <li>
+            <ULink
+              to="/orders"
+              active-class="text-primary"
+            >
+              Orders
+            </ULink>
+          </li>
+          <li>
             <UDropdown
               :items="productsMenu"
               mode="hover"

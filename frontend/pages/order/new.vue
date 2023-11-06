@@ -85,7 +85,10 @@ onMounted(() => {
         <span>{{ row.product.type.type }}</span>
       </template>
       <template #price-data="{ row }">
-        <span class="">${{ row.product.price }}</span>
+        <span>${{ row.product.price.toFixed(2) }}</span>
+      </template>
+      <template #value-data="{ row }">
+        <span class="">${{ row.product.price * row.quantity }}</span>
       </template>
       <template #tax-data="{ row }">
         <span class="">${{ productsStore.calculateTax({...row.product, quantity: row.quantity}) }}</span>
@@ -112,7 +115,7 @@ onMounted(() => {
         variant="solid"
         icon="i-material-symbols-shopping-cart-checkout"
         :disabled="newOrder.products.reduce((acc, cur) => acc + cur.quantity, 0) === 0"
-        @click="console.log('save order')"
+        @click="store.saveOrder"
       >
         Save
       </UButton>
