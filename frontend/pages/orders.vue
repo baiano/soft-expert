@@ -8,15 +8,15 @@ watch(searchTerm, () => {
   page.value = 1
 })
 
-onMounted(() => {
+onMounted(async () => {
   page.value = 1
+  await store.fetchOrders()
 })
 </script>
 
 <template>
   <section>
-    <div class="grid grid-cols-2 pb-5 border-b border-gray-200 dark:border-gray-700">
-      <UInput v-model="searchTerm" class="justify-self-start" placeholder="Filter by products..." />
+    <div class="grid pb-5 border-b border-gray-200 dark:border-gray-700">
       <UButton
         label="New Order"
         color="primary"
@@ -24,14 +24,6 @@ onMounted(() => {
         to="/order/new"
         icon="i-heroicons-plus-circle-20-solid"
         class="justify-self-end ml-3"
-      />
-      <UButton
-        label="Refresh"
-        color="primary"
-        variant="ghost"
-        icon="i-heroicons-refresh-20-solid"
-        class="justify-self-end ml-3"
-        @click="store.fetchOrders"
       />
     </div>
     <UTable :columns="columns" :rows="store.getOrdersFiltered" :sort="{ column: 'product' }">
@@ -51,9 +43,13 @@ onMounted(() => {
         <span>${{ store.calculateOrderTax(row).toFixed(2) }}</span>
       </template>
 
+      <template #created_at-data="{ row }">
+        <span>{{ new Date(row.created_at).toLocaleDateString() + ' ' + new Date(row.created_at).toLocaleTimeString() }}</span>
+      </template>
+
       <template #actions-data="{ row }">
         <div class="text-right">
-          <UButton color="gray" variant="solid" label="View details" icon="i-heroicons-eye-20-solid" />
+          <UButton color="gray" :to="`/order/${row.id}`" variant="solid" label="View details" icon="i-heroicons-eye-20-solid" />
         </div>
       </template>
     </UTable>
