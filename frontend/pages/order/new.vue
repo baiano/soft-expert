@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 const store = useOrdersStore()
-const { newOrder, columns } = storeToRefs(store)
+const { newOrder, newOrderColumns } = storeToRefs(store)
 
 const productsStore = useProductsStore()
 const { products } = storeToRefs(productsStore)
@@ -74,7 +74,7 @@ onMounted(() => {
     </UForm>
 
     <UTable
-      :columns="columns"
+      :columns="newOrderColumns"
       :rows="newOrder.products"
       :sort="{ column: 'product' }"
     >

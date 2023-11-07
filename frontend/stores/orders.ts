@@ -6,6 +6,36 @@ export const useOrdersStore = defineStore('ordersStore', {
       label: 'ID',
     },
     {
+      key: 'quantity',
+      label: 'Qty',
+    },
+    {
+      key: 'value',
+      label: 'Value',
+    },
+    {
+      key: 'tax',
+      label: 'Tax',
+    },
+    {
+      key: 'total',
+      label: 'Total',
+    },
+    {
+      key: 'created_at',
+      label: 'Created At',
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      sortable: false,
+      class: 'text-right',
+    }],
+    newOrderColumns: [{
+      key: 'id',
+      label: 'ID',
+    },
+    {
       key: 'product',
       label: 'Product',
     },
@@ -43,7 +73,7 @@ export const useOrdersStore = defineStore('ordersStore', {
     getOrdersFiltered (state) {
       const configStore = useConfigStore()
       // filter if order.product.product contains configStore.searchTerm
-      return state.orders.filter(order => order.products.some((row) => {
+      return state.orders.filter(order => order.products?.some((row) => {
         return row.product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase())
       }
 
@@ -60,12 +90,16 @@ export const useOrdersStore = defineStore('ordersStore', {
         }]
       ]
     },
-    saveOrder () {
-      this.newOrder.id = this.orders.length + 1
-      this.orders.push(this.newOrder)
+    async saveOrder () {
+      const order = await $fetch(useConfigStore().apiUrl + '/orders', {
+        method: 'POST',
+        body: JSON.stringify(this.newOrder),
+      })
+      // this.orders.push(order)
       this.newOrder = {
         products: [],
       }
+      useRouter().push('/orders')
     },
     productsQuantity (products) {
       // calculate considering quantity
@@ -101,7 +135,6 @@ export const useOrdersStore = defineStore('ordersStore', {
     },
     async fetchOrders () {
       const orders = await $fetch(useConfigStore().apiUrl + '/orders')
-      debugger
       this.orders = orders
     },
   },
