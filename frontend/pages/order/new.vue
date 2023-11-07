@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 const store = useOrdersStore()
-const { newOrder, columns } = storeToRefs(store)
+const { newOrder, newOrderColumns } = storeToRefs(store)
 
 const productsStore = useProductsStore()
 const { products } = storeToRefs(productsStore)
@@ -31,7 +31,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- go back -->
   <section>
     <div
       class="flex justify-start items-center pb-5
@@ -40,10 +39,11 @@ onMounted(() => {
       <UButton
         color="primary"
         variant="solid"
+        class="me-3"
         icon="i-heroicons-arrow-left-20-solid"
         @click="useRouter().push('/orders')"
       />
-      <div class=" ms-3">
+      <div>
         <h1>New Order</h1>
       </div>
     </div>
@@ -73,37 +73,8 @@ onMounted(() => {
       </UFormGroup>
     </UForm>
 
-    <UTable
-      :columns="columns"
-      :rows="newOrder.products"
-      :sort="{ column: 'product' }"
-    >
-      <template #product-data="{ row }">
-        <span class="text-primary">{{ row.product.product }}</span>
-      </template>
-      <template #type-data="{ row }">
-        <span>{{ row.product.type.type }}</span>
-      </template>
-      <template #price-data="{ row }">
-        <span>${{ row.product.price.toFixed(2) }}</span>
-      </template>
-      <template #value-data="{ row }">
-        <span class="">${{ row.product.price * row.quantity }}</span>
-      </template>
-      <template #tax-data="{ row }">
-        <span class="">${{ productsStore.calculateTax({...row.product, quantity: row.quantity}) }}</span>
-      </template>
-      <template #total-data="{ row }">
-        <span class="text-primary">${{ productsStore.calculateTaxedPrice({...row.product, quantity: row.quantity}) }}</span>
-      </template>
-      <template #actions-data="{ row }">
-        <div class="text-right">
-          <UDropdown :items="store.tableActions(row)">
-            <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-          </UDropdown>
-        </div>
-      </template>
-    </UTable>
+    <OrderProductsTable :rows="newOrder.products" :columns="newOrderColumns" />
+
     <!-- save order -->
     <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
       <UButton class="mx-3" color="gray" variant="ghost" icon="i-heroicons-trash-20-solid" @click="newOrder = { products: []}">
