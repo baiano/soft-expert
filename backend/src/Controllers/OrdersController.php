@@ -5,16 +5,15 @@ use Backend\Models\Order;
 
 class OrdersController {
   public function list() {
-    echo '<pre>';
     $orders = Order::all(['include' => 'order_products']);
     foreach ($orders as $index => $order) {
-      $result[$index]['order'] = $order->to_json();
+      $result[$index] = $order->to_array();
       foreach ($order->order_products as $productIndex => $order_product) {
-        $result[$index]['products'][$productIndex]['product'] = $order_product->product->to_json();
-        $result[$index]['products'][$productIndex]['type'] = $order_product->product->type->to_json();
+        $result[$index]['products'][$productIndex]['product'] = $order_product->product->to_array();
+        $result[$index]['products'][$productIndex]['product']['type'] = $order_product->product->type->to_array();
       }
     }
-    return json_encode($result);
+    response()->json($result);
   }
 
   public function create() {

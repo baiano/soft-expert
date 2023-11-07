@@ -99,5 +99,10 @@ export const useOrdersStore = defineStore('ordersStore', {
       })
       return acc
     },
+    async fetchOrders () {
+      const orders = await $fetch(useConfigStore().apiUrl + '/orders')
+      debugger
+      this.orders = orders
+    },
   },
 })
