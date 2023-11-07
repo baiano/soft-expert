@@ -5,8 +5,6 @@ services:
       context: ./frontend
     ports:
       - "3000:3000"
-    links:
-      - mssql
     command: npm run dev
     volumes:
       - ./frontend:/app/
@@ -21,26 +19,22 @@ services:
       - "8080:8080"
     links:
       - frontend
-      - mssql
+      - pgsql
     volumes:
       - ./backend:/app/api
       - ./frontend:/app/frontend
     networks:
       - webapp_network
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: ${DB_PASSWORD}
-      ACCEPT_EULA: Y
-      MSSQL_PID: Developer
-      # Use values from .env
-      MSSQL_DB_HOST: ${DB_HOST}
-      MSSQL_DB_PORT: ${DB_PORT}
-      MSSQL_DB_USER: ${DB_USER}
-      MSSQL_DB_PASSWORD: ${DB_PASSWORD}
-      MSSQL_DB_NAME: ${DB_NAME}
+  pgsql:
+    image: postgres:11.1
     ports:
-      - "1433:1433"
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./db:/var/lib/postgresql/data
     networks:
       - webapp_network
 

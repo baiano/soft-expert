@@ -25,6 +25,14 @@ onMounted(() => {
         icon="i-heroicons-plus-circle-20-solid"
         class="justify-self-end ml-3"
       />
+      <UButton
+        label="Refresh"
+        color="primary"
+        variant="ghost"
+        icon="i-heroicons-refresh-20-solid"
+        class="justify-self-end ml-3"
+        @click="store.fetchOrders"
+      />
     </div>
     <UTable :columns="columns" :rows="store.getOrdersFiltered" :sort="{ column: 'product' }">
       <template #quantity-data="{ row }">
