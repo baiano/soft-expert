@@ -5,9 +5,9 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 
 SimpleRouter::group(['prefix' => '/api', 'middleware' => \Backend\Middlewares\AuthMiddleware::class], function () {
-    SimpleRouter::get('/orders', function() {
-        return 'Hello orders';
-    });
+    SimpleRouter::get('/orders', [\Backend\Controllers\Orders::class, 'list']);
+    SimpleRouter::get('/orders/{id}', [\Backend\Controllers\Orders::class, 'details']);
+    SimpleRouter::post('/orders', [\Backend\Controllers\Orders::class, 'create']);
 
     SimpleRouter::get('/products', function() {
         return 'Products';
