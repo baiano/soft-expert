@@ -2,7 +2,7 @@
     "name": "backend/api",
     "autoload": {
         "psr-4": {
-            "Backend\\Api\\": "src/"
+            "Backend\\": "src/"
         }
     },
     "authors": [

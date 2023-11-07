@@ -1,12 +1,10 @@
 <?php
 use Pecee\SimpleRouter\SimpleRouter;
 
-/**
- * The default namespace for route-callbacks, so we don't have to specify it each time.
- * Can be overwritten by using the namespace config option on your routes.
- */
+\Pecee\SimpleRouter\SimpleRouter::setDefaultNamespace('\Backend\'');
 
- SimpleRouter::group(['prefix' => '/api'], function () {
+
+SimpleRouter::group(['prefix' => '/api', 'middleware' => \Backend\Middlewares\AuthMiddleware::class], function () {
     SimpleRouter::get('/orders', function() {
         return 'Hello orders';
     });
