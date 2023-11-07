@@ -49,7 +49,7 @@ onMounted(async () => {
 
       <template #actions-data="{ row }">
         <div class="text-right">
-          <UButton color="gray" variant="solid" label="View details" icon="i-heroicons-eye-20-solid" />
+          <UButton color="gray" :to="`/order/${row.id}`" variant="solid" label="View details" icon="i-heroicons-eye-20-solid" />
         </div>
       </template>
     </UTable>

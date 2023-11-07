@@ -87,6 +87,10 @@ export const useOrdersStore = defineStore('ordersStore', {
         [{
           label: 'Cancel item',
           icon: 'i-heroicons-x-circle-20-solid',
+          click: (row) => {
+            const index = this.newOrder.products.indexOf(row)
+            this.newOrder.products.splice(index, 1)
+          }
         }]
       ]
     },
@@ -136,6 +140,10 @@ export const useOrdersStore = defineStore('ordersStore', {
     async fetchOrders () {
       const orders = await $fetch(useConfigStore().apiUrl + '/orders')
       this.orders = orders
+    },
+    async getOrder(id) {
+      const order = await $fetch(useConfigStore().apiUrl + '/orders/' + id) 
+      return order
     },
   },
 })

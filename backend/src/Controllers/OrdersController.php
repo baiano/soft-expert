@@ -41,7 +41,7 @@ class OrdersController {
   }
 
   public function details(int $id) {
-    $orders = Order::find(1);
+    $orders = Order::find($id);
     $result = $this->formatOrder([$orders]);
     response()->json($result[0]);
   }
