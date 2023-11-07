@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "126f480b84d57c2daaea71513b9c1d36",
+    "content-hash": "300672733744eff5cbd6715a357c2732",
     "packages": [
         {
             "name": "pecee/simple-router",
@@ -71,32 +71,37 @@
         },
         {
             "name": "php-patterns/activerecord",
-            "version": "v1.1.11",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-activerecord/activerecord.git",
-                "reference": "b98262eb3b5a0c14e2239fd845c410ec66327b91"
+                "reference": "bde8bab9ca3ba91c17745e04a55fc5c25d0225f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-activerecord/activerecord/zipball/b98262eb3b5a0c14e2239fd845c410ec66327b91",
-                "reference": "b98262eb3b5a0c14e2239fd845c410ec66327b91",
+                "url": "https://api.github.com/repos/php-activerecord/activerecord/zipball/bde8bab9ca3ba91c17745e04a55fc5c25d0225f6",
+                "reference": "bde8bab9ca3ba91c17745e04a55fc5c25d0225f6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.1",
-                "pear/log": "~1.13",
-                "pear/pear_exception": "1.0",
-                "phpunit/phpunit": "^9.5.21"
+                "friendsofphp/php-cs-fixer": "^v3.23.0",
+                "monolog/monolog": "^3.4",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpunit/phpunit": "^10"
             },
             "type": "library",
             "autoload": {
                 "files": [
-                    "ActiveRecord.php"
-                ]
+                    "ActiveRecord.php",
+                    "lib/Utils.php"
+                ],
+                "psr-4": {
+                    "ActiveRecord\\": "lib/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -110,9 +115,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-activerecord/activerecord/issues",
-                "source": "https://github.com/php-activerecord/activerecord/tree/v1.1.11"
+                "source": "https://github.com/php-activerecord/activerecord/tree/v2.0.1"
             },
-            "time": "2023-08-20T22:33:09+00:00"
+            "time": "2023-10-25T03:38:46+00:00"
         }
     ],
     "packages-dev": [],

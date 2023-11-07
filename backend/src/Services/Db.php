@@ -1,24 +1,24 @@
-use ActiveRecord\Config;
-use ActiveRecord\Connection;
 <?php
+namespace Backend\Services;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
+use ActiveRecord\Config;
 
 class Db {
     private $conn;
 
     public function __construct() {
         $this->conn = null;
+        $cfg = Config::instance();
+        $connectionParams = [
+            'development' => 'pgsql://postgres:postgres@pgsql/postgres',
+            'test' => 'pgsql://postgres:postgres@pgsql/postgres',
+            'production' => 'pgsql://postgres:postgres@pgsql/postgres'
+        ];
+
         try {
-            Config::initialize(function($cfg) {
-                $cfg->set_model_directory(__DIR__ . '/../../models');
-                $cfg->set_connections(array(
-                    'development' => "pgsql:host=pgsql;port=5432;dbname=my_database",
-                ));
-            });
-            $this->conn = Connection::instance('development');
-        } catch(PDOException $e) {
+            $cfg->set_connections($connectionParams);
+            $cfg->set_default_connection('development'); // Set your default connection here
+        } catch(\PDOException $e) {
             echo 'Connection Error: ' . $e->getMessage();
         }
     }
@@ -26,5 +26,9 @@ class Db {
     public function getConnection() {
         return $this->conn;
     }
-}
 
+    public function getActiveRecordConnection() {
+        return \ActiveRecord\Connection::instance();
+    }
+}
+?>

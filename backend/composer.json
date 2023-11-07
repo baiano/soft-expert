@@ -13,6 +13,6 @@
     ],
     "require": {
         "pecee/simple-router": "5.3.0.5",
-        "php-patterns/activerecord": "^1.0"
+        "php-patterns/activerecord": "^2.0.1"
     }
 }

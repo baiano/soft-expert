@@ -26,7 +26,7 @@ services:
     networks:
       - webapp_network
   pgsql:
-    image: postgres:latest
+    image: postgres:11.1
     ports:
       - "5432:5432"
     environment:
