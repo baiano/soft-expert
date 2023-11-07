@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4abbe7953d79673623a679cbfe1d3e0c",
+    "content-hash": "126f480b84d57c2daaea71513b9c1d36",
     "packages": [
         {
             "name": "pecee/simple-router",
@@ -68,6 +68,51 @@
                 "source": "https://github.com/skipperbent/simple-php-router/issues"
             },
             "time": "2023-05-06T19:11:12+00:00"
+        },
+        {
+            "name": "php-patterns/activerecord",
+            "version": "v1.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-activerecord/activerecord.git",
+                "reference": "b98262eb3b5a0c14e2239fd845c410ec66327b91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-activerecord/activerecord/zipball/b98262eb3b5a0c14e2239fd845c410ec66327b91",
+                "reference": "b98262eb3b5a0c14e2239fd845c410ec66327b91",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.1",
+                "pear/log": "~1.13",
+                "pear/pear_exception": "1.0",
+                "phpunit/phpunit": "^9.5.21"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "ActiveRecord.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "php-activerecord is an open source ORM library based on the ActiveRecord pattern.",
+            "homepage": "http://www.phpactiverecord.org/",
+            "keywords": [
+                "activerecord",
+                "orm"
+            ],
+            "support": {
+                "issues": "https://github.com/php-activerecord/activerecord/issues",
+                "source": "https://github.com/php-activerecord/activerecord/tree/v1.1.11"
+            },
+            "time": "2023-08-20T22:33:09+00:00"
         }
     ],
     "packages-dev": [],
