@@ -62,6 +62,7 @@ RUN composer install
 
 COPY --from=frontend /app/frontend/.output/public /app/
 
+WORKDIR /app/
 # PHP extensions
 # Example: RUN docker-php-ext-install pdo pdo_mysql
 
