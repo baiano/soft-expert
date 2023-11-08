@@ -90,7 +90,7 @@ export const useOrdersStore = defineStore('ordersStore', {
           click: (row) => {
             const index = this.newOrder.products.indexOf(row)
             this.newOrder.products.splice(index, 1)
-          }
+          },
         }]
       ]
     },
@@ -141,9 +141,12 @@ export const useOrdersStore = defineStore('ordersStore', {
       const orders = await $fetch(useConfigStore().apiUrl + '/orders')
       this.orders = orders
     },
-    async getOrder(id) {
-      const order = await $fetch(useConfigStore().apiUrl + '/orders/' + id) 
+    async getOrder (id) {
+      const order = await $fetch(useConfigStore().apiUrl + '/order/' + id)
       return order
     },
+  },
+  persist: {
+    paths: ['orders'],
   },
 })

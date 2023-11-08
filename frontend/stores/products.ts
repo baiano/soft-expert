@@ -1,48 +1,6 @@
 export const useProductsStore = defineStore('productsStore', {
   state: () => ({
     products: [
-      {
-        id: 1,
-        product: 'Crispy Fried Onions',
-        type: useTypesStore().types[0],
-        price: 3.47,
-      },
-      {
-        id: 2,
-        product: 'Milk',
-        type: useTypesStore().types[0],
-        price: 1.99,
-      },
-      {
-        id: 3,
-        product: 'Beer',
-        type: useTypesStore().types[4],
-        price: 2.49,
-      },
-      {
-        id: 4,
-        product: 'Rock T-Shirt',
-        type: useTypesStore().types[3],
-        price: 12.99,
-      },
-      {
-        id: 5,
-        product: 'Bananas',
-        type: useTypesStore().types[0],
-        price: 1.49,
-      },
-      {
-        id: 6,
-        product: 'Magic beans',
-        type: useTypesStore().types[5],
-        price: 5.99,
-      },
-      {
-        id: 7,
-        product: 'Potatoes',
-        type: useTypesStore().types[0],
-        price: 2.79,
-      }
     ],
     columns: [{
       key: 'id',
@@ -95,7 +53,7 @@ export const useProductsStore = defineStore('productsStore', {
       return state.products
         .filter((product) => {
         // product includes search term or types include search term
-          return product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase()) || product.types.some(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+          return product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase()) || product.types?.some(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
         })
         .slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
     },
@@ -107,6 +65,11 @@ export const useProductsStore = defineStore('productsStore', {
       }
       return state.products.length
     },
+    getProductFromUrl (state) {
+      const id = parseInt(useRoute().params.id)
+      const product = state.products.find(product => product.id === id)
+      return product
+    }
   },
   actions: {
     tableActions (row) {
@@ -114,13 +77,11 @@ export const useProductsStore = defineStore('productsStore', {
         [{
           label: 'Edit',
           icon: 'i-heroicons-pencil-square-20-solid',
-          click: () => console.log('Edit', row.id),
-        }, {
-          label: 'Duplicate',
-          icon: 'i-heroicons-document-duplicate-20-solid',
+          click: () => useRouter().push('/product/edit/' + row.id),
         }], [{
           label: 'Delete',
           icon: 'i-heroicons-trash-20-solid',
+          click: () => this.delete(row.id),
         }]
       ]
     },
@@ -141,18 +102,48 @@ export const useProductsStore = defineStore('productsStore', {
       }
       return tax.toFixed(2)
     },
-    fakeProducts () {
-      const products = []
-      const types = useTypesStore().types
-      for (let i = 0; i < 7; i++) {
-        products.push({
-          id: i,
-          product: `Product ${i}`,
-          type: { type: types[Math.floor(Math.random() * types.length)].type, tax: types[Math.floor(Math.random() * types.length)].tax },
-          price: Math.floor(Math.random() * 100),
-        })
-      }
+    async fetchProducts () {
+      const products = await $fetch(useConfigStore().apiUrl + '/products')
       this.products = products
     },
+    async saveProduct () {
+      const product = await $fetch(useConfigStore().apiUrl + '/products', {
+        method: 'POST',
+        body: JSON.stringify(this.newProduct),
+      })
+      this.products.push(product)
+      this.resetNewUser()
+      useRouter().push('/products')
+    },
+    async delete (id) {
+      const isDeleted = await $fetch(useConfigStore().apiUrl + '/product/' + id, {
+        method: 'DELETE',
+      })
+      const index = this.products.findIndex(product => product.id === id)
+      this.products.splice(index, 1)
+      return isDeleted
+    },
+    async updateProduct (productToUpdate) {
+      const product = await $fetch(useConfigStore().apiUrl + '/product/' + productToUpdate.id, {
+        method: 'PUT',
+        body: JSON.stringify(this.getProductFromUrl),
+      })
+      const index = this.products.findIndex(product => product.id === productToUpdate.id)
+      this.products[index] = product
+      this.resetNewUser()
+      useRouter().push('/products')
+    },
+    resetNewUser () {
+      this.newProduct = {
+        product: '',
+        type: {
+
+        },
+        price: 0,
+      }
+    },
+  },
+  persist: {
+    paths: ['products'],
   },
 })

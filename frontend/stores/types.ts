@@ -77,4 +77,7 @@ export const useTypesStore = defineStore('typesStore', {
       ]
     },
   },
+  persist: {
+    paths: ['types'],
+  },
 })
