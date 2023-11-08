@@ -30,6 +30,7 @@ export const useTypesStore = defineStore('typesStore', {
     },
     getTypesFiltered (state) {
       const configStore = useConfigStore()
+      if (typeof state.types.filter !== 'function') { return [] }
       return state.types?.filter(type => type.type?.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
     },
     getTypeFromUrl (state) {

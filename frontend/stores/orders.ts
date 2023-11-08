@@ -71,6 +71,7 @@ export const useOrdersStore = defineStore('ordersStore', {
   }),
   getters: {
     getOrdersFiltered (state) {
+      if (typeof state.orders.filter !== 'function') { return [] }
       const configStore = useConfigStore()
       // filter if order.product.product contains configStore.searchTerm
       return state.orders.filter(order => order.products?.some((row) => {

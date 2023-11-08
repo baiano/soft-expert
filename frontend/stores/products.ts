@@ -50,6 +50,7 @@ export const useProductsStore = defineStore('productsStore', {
     },
     getProductsFiltered (state): {}[] {
       const configStore = useConfigStore()
+      if (typeof state.products.filter !== 'function') { return [] }
       return state.products
         .filter((product) => {
         // product includes search term or types include search term
