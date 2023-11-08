@@ -69,7 +69,7 @@ export const useProductsStore = defineStore('productsStore', {
       const id = parseInt(useRoute().params.id)
       const product = state.products.find(product => product.id === id)
       return product
-    }
+    },
   },
   actions: {
     tableActions (row) {

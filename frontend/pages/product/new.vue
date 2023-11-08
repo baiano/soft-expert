@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '#ui/types'
 const store = useProductsStore()
-const { newProduct, products } = storeToRefs(store)
+const { newProduct } = storeToRefs(store)
 
-async function onSubmit (event: FormSubmitEvent<any>) {
+async function onSubmit () {
   await store.saveProduct()
 }
 

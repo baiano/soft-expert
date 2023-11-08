@@ -3,13 +3,11 @@ const productsStore = useProductsStore()
 const { products } = storeToRefs(productsStore)
 
 const typesStore = useTypesStore()
-const { types } = storeToRefs(typesStore)
 
 const ordersStore = useOrdersStore()
 const { orders } = storeToRefs(ordersStore)
 
 // Mock data for demonstration
-const lastFiveProducts = products.value.slice(-5)
 onMounted(async () => {
   await productsStore.fetchProducts()
   await typesStore.fetchTypes()

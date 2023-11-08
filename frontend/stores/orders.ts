@@ -95,7 +95,7 @@ export const useOrdersStore = defineStore('ordersStore', {
       ]
     },
     async saveOrder () {
-      const order = await $fetch(useConfigStore().apiUrl + '/orders', {
+      await $fetch(useConfigStore().apiUrl + '/orders', {
         method: 'POST',
         body: JSON.stringify(this.newOrder),
       })

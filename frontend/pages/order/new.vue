@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '#ui/types'
+import type { FormError } from '#ui/types'
 const store = useOrdersStore()
 const { newOrder, newOrderColumns } = storeToRefs(store)
 
@@ -17,7 +17,7 @@ const validate = (): FormError[] => {
   return errors
 }
 
-function onSubmit (event: FormSubmitEvent<any>) {
+function onSubmit () {
   newOrder.value.products.push({ ...productToAdd.value, id: newOrder.value.products.length + 1 })
   productToAdd.value = { product: { product: 'Select' }, quantity: 0 }
   // useRouter().push('/orders')

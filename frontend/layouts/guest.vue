@@ -4,7 +4,7 @@
     <UContainer class="p-3 mt-3 grow">
       <NuxtPage />
     </UContainer>
-    <Footer class="sticky top-[100vh]"/>
+    <Footer class="sticky top-[100vh]" />
   </div>
 </template>
 
