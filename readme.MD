@@ -34,6 +34,30 @@ The seed is located in `db/seed/seed.sql`and is automatically imported when dock
 ## Tests
 There are frontend tests, covering basic operations as CRUD. To run, you will need to install the dependencies with `npm ci` and run `npx vitest` in the frontend folder (Host Machine). Check your node version, it must be 18 or higher.
 
+## Technologies
+### Backend
+- PHP 8.1
+- Node 18
+- Active Records
+- Php Simple Router
+### Frontend
+- Vue 3
+- Pinia
+- Nuxt 3
+- Tailwind
+- Nuxt UI
+### Database
+- Postgres 11.1
+### Others
+- Docker
+- Vitest
+
+## Things i would like to improve
+- Add Backend tests
+- Implement Firebase to handle auth
+- Finish the AuthMiddleware.php to insert the firebase auth
+
+
 ## Contact
 If you have any questions, please contact me at `guilhermelchaves@gmail.com` or leave a message in [my personal site](https://limachaves.com).
 
