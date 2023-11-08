@@ -2,7 +2,7 @@ FROM node:18 as frontend
 
 WORKDIR /app/
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm ci
 
