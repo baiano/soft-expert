@@ -8,7 +8,8 @@ export default defineNuxtConfig({
         autoImports: ['defineStore', 'acceptHMRUpdate', 'storeToRefs'],
       }
     ],
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@pinia-plugin-persistedstate/nuxt'
   ],
   imports: {
     dirs: ['stores'],

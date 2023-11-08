@@ -2,9 +2,9 @@ FROM node:18 as frontend
 
 WORKDIR /app/frontend
 
-COPY frontend/package*.json .
+COPY frontend/package*.json ./
 
-COPY ./frontend .
+COPY ./frontend ./
 
 RUN npm ci
 
@@ -40,16 +40,25 @@ RUN set -eux; \
             libwebp-dev \
             libxpm-dev \
             libmcrypt-dev \
-            libonig-dev; \
-    rm -rf /var/lib/apt/lists/*
+            libonig-dev \
+            zip \
+            unzip \
+            libzip-dev; \
+    rm -rf /var/lib/apt/lists/* \
+    && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN set -eux; \
     # Install the PHP pdo_pgsql extention
-    docker-php-ext-install pdo_pgsql; 
+    docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-install zip; 
     
 WORKDIR /app
 
 COPY . .
+
+COPY ./backend/composer.* ./
+
+RUN composer install
 
 COPY --from=frontend /app/frontend/.output/public /app/
 

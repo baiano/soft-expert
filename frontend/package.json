@@ -18,6 +18,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "nuxt": "^3.8.0",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
@@ -25,10 +26,11 @@
   "dependencies": {
     "@iconify/json": "^2.2.137",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@pinia/nuxt": "^0.4.11",
+    "@pinia/nuxt": "^0.5.1",
     "eslint": "^8.53.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "lint-staged": "^15.0.2",
-    "pinia": "^2.1.7"
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.0"
   }
 }

@@ -33,7 +33,7 @@ const props = defineProps({
         <span>${{ row.product.price.toFixed(2) }}</span>
       </template>
       <template #value-data="{ row }">
-        <span class="">${{ row.product.price * row.quantity }}</span>
+        <span class="">${{ (row.product.price * row.quantity).toFixed(2) }}</span>
       </template>
       <template #tax-data="{ row }">
         <span class="">${{ productsStore.calculateTax({...row.product, quantity: row.quantity}) }}</span>

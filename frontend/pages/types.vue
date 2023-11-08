@@ -11,8 +11,9 @@ watch(searchTerm, () => {
   page.value = 1
 })
 
-onMounted(() => {
+onMounted(async () => {
   page.value = 1
+  await store.fetchTypes()
 })
 </script>
 
@@ -28,7 +29,6 @@ onMounted(() => {
         icon="i-heroicons-plus-circle-20-solid"
         class="justify-self-end ml-3"
       />
-     
     </div>
     <UTable :columns="columns" :rows="store.getTypesFiltered" :sort="{ column: 'type' }">
       <template #type-data="{ row }">
@@ -36,13 +36,13 @@ onMounted(() => {
       </template>
 
       <template #price-data="{ row }">
-        <span >${{ row.price.toFixed(2) }}</span>
+        <span>${{ row.price.toFixed(2) }}</span>
       </template>
-      
+
       <template #tax-data="{ row }">
-        <span >{{ row.tax * 100 }}%</span>
+        <span>{{ row.tax }}%</span>
       </template>
-      
+
       <template #actions-data="{ row }">
         <div class="text-right">
           <UDropdown :items="store.tableActions(row)">

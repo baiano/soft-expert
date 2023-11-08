@@ -4,15 +4,16 @@ const { columns } = storeToRefs(store)
 const configStore = useConfigStore()
 const { page, rowsPerPage, searchTerm } = storeToRefs(configStore)
 function typeName (row) {
-  return row.type.type
+  return row.type?.type
 }
 
 watch(searchTerm, () => {
   page.value = 1
 })
 
-onMounted(() => {
+onMounted(async () => {
   page.value = 1
+  await store.fetchProducts()
 })
 </script>
 
