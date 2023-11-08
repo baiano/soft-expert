@@ -27,7 +27,7 @@ services:
       - webapp_network
   pgsql:
     build:
-      context: ./pgsql
+      context: ./db
     ports:
       - "5432:5432"
     environment:
@@ -35,8 +35,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     volumes:
-      - ./seed:/seed
-      - ./db:/var/lib/postgresql/data
+      - ./db/seed:/seed
+      - ./db/data:/var/lib/postgresql/data
     networks:
       - webapp_network
 

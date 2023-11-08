@@ -29,7 +29,6 @@ onMounted(async () => {
         icon="i-heroicons-plus-circle-20-solid"
         class="justify-self-end ml-3"
       />
-     
     </div>
     <UTable :columns="columns" :rows="store.getProductsFiltered" :sort="{ column: 'product' }">
       <template #type-data="{ row }">
@@ -37,11 +36,11 @@ onMounted(async () => {
       </template>
 
       <template #price-data="{ row }">
-        <span >${{ row.price.toFixed(2) }}</span>
+        <span>${{ row.price.toFixed(2) }}</span>
       </template>
-      
+
       <template #tax-data="{ row }">
-        <span >${{ store.calculateTax({...row, quantity: 1}) }}</span>
+        <span>${{ store.calculateTax({...row, quantity: 1}) }}</span>
       </template>
       <template #total-data="{ row }">
         <span class="text-primary">${{ store.calculateTaxedPrice({...row, quantity: 1}) }}</span>

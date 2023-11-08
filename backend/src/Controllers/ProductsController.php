@@ -18,7 +18,7 @@ class ProductsController {
     $product->price = $body['price'];
     $product->id_type = $body['type']['id'];
     $product->save();
-    response($product);
+    response()->json($product->to_array());
   }
 
   public function details(int $id) {
