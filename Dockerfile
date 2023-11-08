@@ -52,9 +52,9 @@ RUN set -eux; \
     docker-php-ext-install pdo_pgsql \
     && docker-php-ext-install zip; 
     
-WORKDIR /app
+WORKDIR /app/api
 
-COPY . .
+COPY ./backend .
 
 COPY ./backend/composer.* ./
 
