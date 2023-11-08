@@ -88,7 +88,7 @@ export const useProductsStore = defineStore('productsStore', {
     calculateTaxedPrice (product) {
       if (!product) { return 0.00 }
       let tax = 0
-      tax += product.type?.tax * product.price * product.quantity
+      tax += ((1 + product.type?.tax) * product.price) * product.quantity
       if (!product?.price) {
         tax = 0
       }
@@ -96,7 +96,7 @@ export const useProductsStore = defineStore('productsStore', {
     },
     calculateTax (product) {
       let tax = 0
-      tax += product.type?.tax * product.price * product.quantity
+      tax += ((1 + product.type?.tax) * product.price) * product.quantity
       if (!product?.price) {
         tax = 0
       }

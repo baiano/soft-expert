@@ -9,7 +9,8 @@ export default defineNuxtConfig({
       }
     ],
     '@nuxt/ui',
-    '@pinia-plugin-persistedstate/nuxt'
+    '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-vitest'
   ],
   imports: {
     dirs: ['stores'],

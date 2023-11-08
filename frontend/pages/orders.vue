@@ -1,4 +1,5 @@
 <script setup>
+
 const store = useOrdersStore()
 const { columns } = storeToRefs(store)
 const configStore = useConfigStore()
@@ -49,6 +50,14 @@ onMounted(async () => {
 
       <template #actions-data="{ row }">
         <div class="text-right">
+          <!-- delete -->
+          <!--UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-trash-20-solid"
+            @click="store.delete(row.id)"
+            label="Delete"
+          /-->
           <UButton color="gray" :to="`/order/${row.id}`" variant="solid" label="View details" icon="i-heroicons-eye-20-solid" />
         </div>
       </template>

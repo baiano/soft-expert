@@ -94,12 +94,16 @@ export const useOrdersStore = defineStore('ordersStore', {
         }]
       ]
     },
-    async saveOrder () {
-      await $fetch(useConfigStore().apiUrl + '/orders', {
+    async saveOrder (testing = false) {
+      const order = await $fetch(useConfigStore().apiUrl + '/orders', {
         method: 'POST',
         body: JSON.stringify(this.newOrder),
       })
       // this.orders.push(order)
+      if (testing) {
+        return order
+      }
+
       this.newOrder = {
         products: [],
       }
@@ -144,6 +148,14 @@ export const useOrdersStore = defineStore('ordersStore', {
     async getOrder (id) {
       const order = await $fetch(useConfigStore().apiUrl + '/order/' + id)
       return order
+    },
+    async delete (id) {
+      const isDeleted = await $fetch(useConfigStore().apiUrl + '/order/' + id, {
+        method: 'DELETE',
+      })
+      const index = this.orders.findIndex(order => order.id === id)
+      this.orders.splice(index, 1)
+      return isDeleted
     },
   },
   persist: {
