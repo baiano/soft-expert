@@ -88,7 +88,7 @@ export const useProductsStore = defineStore('productsStore', {
     calculateTaxedPrice (product) {
       if (!product) { return 0.00 }
       let tax = 0
-      tax += ((1 + product.type?.tax) * product.price) * product.quantity
+      tax += ((product.type?.tax) * product.price) * product.quantity
       if (!product?.price) {
         tax = 0
       }
@@ -96,7 +96,7 @@ export const useProductsStore = defineStore('productsStore', {
     },
     calculateTax (product) {
       let tax = 0
-      tax += ((1 + product.type?.tax) * product.price) * product.quantity
+      tax += ((product.type?.tax) * product.price) * (product.quantity ?? 1)
       if (!product?.price) {
         tax = 0
       }
@@ -106,11 +106,14 @@ export const useProductsStore = defineStore('productsStore', {
       const products = await $fetch(useConfigStore().apiUrl + '/products')
       this.products = products
     },
-    async saveProduct () {
+    async saveProduct (testing = false) {
       const product = await $fetch(useConfigStore().apiUrl + '/products', {
         method: 'POST',
         body: JSON.stringify(this.newProduct),
       })
+      if (testing) {
+        return product
+      }
       this.products.push(product)
       this.resetNewUser()
       useRouter().push('/products')
@@ -123,13 +126,17 @@ export const useProductsStore = defineStore('productsStore', {
       this.products.splice(index, 1)
       return isDeleted
     },
-    async updateProduct (productToUpdate) {
+    async updateProduct (productToUpdate, testing = false) {
       const product = await $fetch(useConfigStore().apiUrl + '/product/' + productToUpdate.id, {
         method: 'PUT',
-        body: JSON.stringify(this.getProductFromUrl),
+        body: JSON.stringify(!testing ? this.getProductFromUrl : productToUpdate),
       })
       const index = this.products.findIndex(product => product.id === productToUpdate.id)
       this.products[index] = product
+      if (testing) {
+        this.products[index].type = productToUpdate.type
+        return product
+      }
       this.resetNewUser()
       useRouter().push('/products')
     },

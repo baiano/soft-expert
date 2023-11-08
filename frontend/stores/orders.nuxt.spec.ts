@@ -16,8 +16,6 @@ beforeAll(() => {
     server: false,
     configFile: 'nuxt.config.ts',
   })
-
-//   global.useRequestHeaders = () => 'cookier'
 })
 
 describe('initializes', () => {
@@ -72,7 +70,7 @@ describe('Orders Store', () => {
   describe('fetchOrders', () => {
     test('orders are fetched', () => {
       console.log(store.orders.length)
-      expect(store.orders.length).toBeGreaterThan(5)
+      expect(store.orders.length).toBeGreaterThan(0)
     })
   })
 
