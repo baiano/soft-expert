@@ -86,7 +86,7 @@ onMounted(() => {
         variant="solid"
         icon="i-material-symbols-shopping-cart-checkout"
         :disabled="newOrder.products.reduce((acc, cur) => acc + cur.quantity, 0) === 0"
-        @click="store.saveOrder"
+        @click="store.saveOrder(false)"
       >
         Save
       </UButton>
