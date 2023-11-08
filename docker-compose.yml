@@ -23,6 +23,7 @@ services:
     volumes:
       - ./backend:/app/api
       - ./frontend:/app/frontend
+      - /app/api/vendor
     networks:
       - webapp_network
   pgsql:
