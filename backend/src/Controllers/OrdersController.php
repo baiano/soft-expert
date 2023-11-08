@@ -21,7 +21,7 @@ class OrdersController {
     $qtyProducts = 0;
 
     foreach ($body['products'] as $product) {
-      $totalPrice += $product['quantity'] * ($product['product']['price'] * $product['product']['type']['tax']);
+      $totalPrice += $product['quantity'] * ($product['product']['price'] * (1+$product['product']['type']['tax']));
       $qtyProducts += $product['quantity'];
     }
     
@@ -37,13 +37,23 @@ class OrdersController {
       $orderProduct->save();
     }
 
-    response()->json($body);
+    response()->json($order->to_array());
   }
 
   public function details(int $id) {
     $orders = Order::find($id);
     $result = $this->formatOrder([$orders]);
     response()->json($result[0]);
+  }
+
+  public function delete(int $id) {
+    $order = Order::find($id);
+    $orderProducts = OrderProduct::where('id_order = '.$id)->to_a();
+    foreach ($orderProducts as $orderProduct) {
+      $orderProduct->delete();
+    }
+    $order->delete();
+    response()->json(['message' => 'Order deleted']);
   }
 
   private function formatOrder($orders) {

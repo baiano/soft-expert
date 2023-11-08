@@ -8,6 +8,7 @@ SimpleRouter::group(['prefix' => '/api', 'middleware' => \Backend\Middlewares\Au
     SimpleRouter::get('/orders', [\Backend\Controllers\OrdersController::class, 'list']);
     SimpleRouter::get('/order/{id}', [\Backend\Controllers\OrdersController::class, 'details']);
     SimpleRouter::post('/orders', [\Backend\Controllers\OrdersController::class, 'create']);
+    SimpleRouter::delete('/order/{id}', [\Backend\Controllers\OrdersController::class, 'delete']);
 
     SimpleRouter::get('/products', [\Backend\Controllers\ProductsController::class, 'list']);
     SimpleRouter::get('/product/{id}', [\Backend\Controllers\ProductsController::class, 'details']);

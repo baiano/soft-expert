@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '#ui/types'
 const store = useTypesStore()
 const { newType } = storeToRefs(store)
 
-async function onSubmit (event: FormSubmitEvent<any>) {
+async function onSubmit () {
   await store.saveType()
 }
 

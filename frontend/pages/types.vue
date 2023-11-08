@@ -3,9 +3,6 @@ const store = useTypesStore()
 const { columns } = storeToRefs(store)
 const configStore = useConfigStore()
 const { page, rowsPerPage, searchTerm } = storeToRefs(configStore)
-function typeName (row) {
-  return row.type.type
-}
 
 watch(searchTerm, () => {
   page.value = 1
