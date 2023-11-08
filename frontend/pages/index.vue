@@ -12,7 +12,7 @@ const { orders } = storeToRefs(ordersStore)
 const lastFiveProducts = products.value.slice(-5)
 onMounted(async () => {
   await productsStore.fetchProducts()
-  // typesStore.fetchTypes()
+  await typesStore.fetchTypes()
   await ordersStore.fetchOrders()
 })
 </script>
@@ -28,7 +28,7 @@ onMounted(async () => {
         <span class="text-2xl font-bold">Last products added: </span>
       </div>
       <ul>
-        <li v-for="product in products.slice(-5) " :key="product.id">
+        <li v-for="product in products.slice(-5).reverse() " :key="product.id">
           {{ product.product }}
         </li>
       </ul>

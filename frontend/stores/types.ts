@@ -1,36 +1,6 @@
 export const useTypesStore = defineStore('typesStore', {
   state: () => ({
     types: [
-      {
-        id: 1,
-        type: 'Groceries',
-        tax: 0.1,
-      },
-      {
-        id: 2,
-        type: 'Eletronics',
-        tax: 0.2,
-      },
-      {
-        id: 3,
-        type: 'Books',
-        tax: 0.05,
-      },
-      {
-        id: 4,
-        type: 'Clothing',
-        tax: 0.15,
-      },
-      {
-        id: 5,
-        type: 'Alcohol',
-        tax: 0.3,
-      },
-      {
-        id: 6,
-        type: 'Other',
-        tax: 0.1,
-      }
     ],
     columns: [{
       key: 'id',
@@ -60,7 +30,11 @@ export const useTypesStore = defineStore('typesStore', {
     },
     getTypesFiltered (state) {
       const configStore = useConfigStore()
-      return state.types.filter(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+      return state.types?.filter(type => type.type?.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+    },
+    getTypeFromUrl (state) {
+      const id = parseInt(useRoute().params.id)
+      return state.types.find(type => type.id === id)
     },
   },
   actions: {
@@ -69,12 +43,55 @@ export const useTypesStore = defineStore('typesStore', {
         [{
           label: 'Edit',
           icon: 'i-heroicons-pencil-square-20-solid',
-          click: () => console.log('Edit', row.id),
+          click: () => useRouter().push('/type/edit/' + row.id),
         }], [{
           label: 'Delete',
           icon: 'i-heroicons-trash-20-solid',
+          click: () => this.delete(row.id),
         }]
       ]
+    },
+    async fetchTypes () {
+      const types = await $fetch(useConfigStore().apiUrl + '/types')
+      this.types = types
+    },
+    async saveType () {
+      const type = await $fetch(useConfigStore().apiUrl + '/types', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.newType),
+      })
+      this.types.push(type)
+      this.newType = {
+        type: '',
+        tax: 0,
+      }
+      useRouter().push('/types')
+    },
+    async delete (id) {
+      await $fetch(useConfigStore().apiUrl + '/type/' + id, {
+        method: 'DELETE',
+      })
+      const index = this.types.findIndex(type => type.id === id)
+      this.types.splice(index, 1)
+    },
+    async update (typeUpdated) {
+      const type = await $fetch(useConfigStore().apiUrl + '/type/' + typeUpdated.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(typeUpdated),
+      })
+      const index = this.types.findIndex(type => type.id === typeUpdated.id)
+      this.types[index] = type
+      this.newType = {
+        type: '',
+        tax: 0,
+      }
+      useRouter().push('/types')
     },
   },
   persist: {

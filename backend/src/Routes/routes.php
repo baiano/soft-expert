@@ -14,6 +14,12 @@ SimpleRouter::group(['prefix' => '/api', 'middleware' => \Backend\Middlewares\Au
     SimpleRouter::post('/products', [\Backend\Controllers\ProductsController::class, 'create']);
     SimpleRouter::delete('/product/{id}', [\Backend\Controllers\ProductsController::class, 'delete']);
     SimpleRouter::put('/product/{id}', [\Backend\Controllers\ProductsController::class, 'update']);
+
+    SimpleRouter::get('/types', [\Backend\Controllers\TypesController::class, 'list']);
+    SimpleRouter::get('/type/{id}', [\Backend\Controllers\TypesController::class, 'details']);
+    SimpleRouter::post('/types', [\Backend\Controllers\TypesController::class, 'create']);
+    SimpleRouter::delete('/type/{id}', [\Backend\Controllers\TypesController::class, 'delete']);
+    SimpleRouter::put('/type/{id}', [\Backend\Controllers\TypesController::class, 'update']);
 });
 
 // Start the routing

@@ -4,7 +4,6 @@ const { newProduct } = storeToRefs(store)
 
 const stateModel = computed(() => {
   if (props.action === 'new') {
-    console.log('newAction')
     return newProduct.value
   } else {
     const productId = useRoute().params.id
