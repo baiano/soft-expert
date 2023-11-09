@@ -62,7 +62,6 @@ describe('Products Store', () => {
 
   describe('calculateTax', () => {
     test('calculates tax', () => {
-      productTest.type.tax = productTest.type.tax * 100
       expect(store.calculateTax(productTest)).toBe('0.75')
     })
   })
