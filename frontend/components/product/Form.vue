@@ -31,6 +31,22 @@ const props = defineProps({
     required: true,
   },
 })
+
+function calculateTax () {
+  console.log(stateModel.value)
+  let tax = 0.00
+  if (stateModel.type?.tax > 1) {
+    tax = (stateModel.type?.tax).toFixed(2)
+  }
+  if (stateModel.value.type?.tax) {
+    if (stateModel.value.type?.tax > 1) {
+      tax = stateModel.value.type?.tax / 100
+    } else {
+      tax = stateModel.value.type?.tax 
+    }
+  }
+  return tax
+}
 </script>
 
 <template>
@@ -56,8 +72,8 @@ const props = defineProps({
       <UFormGroup class="pb-3" label="Price" name="price">
         <UInput v-if="stateModel" v-model.number="stateModel.price" />
       </UFormGroup>
-      <span class="block">Tax: ${{ (stateModel.type.tax / 100 * stateModel.price).toFixed(2) }} </span>
-      <span class="block pb-3">Total price: ${{ ((stateModel.type.tax / 100 * stateModel.price) + stateModel.price).toFixed(2)  }} </span>
+      <span class="block">Tax: ${{ calculateTax().toFixed(2) }} </span>
+      <span class="block pb-3">Total price: ${{ (parseFloat(calculateTax()) + stateModel.price).toFixed(2) }} </span>
 
       <UButton type="submit">
         Save
