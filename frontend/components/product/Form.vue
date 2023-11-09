@@ -56,8 +56,8 @@ const props = defineProps({
       <UFormGroup class="pb-3" label="Price" name="price">
         <UInput v-if="stateModel" v-model.number="stateModel.price" />
       </UFormGroup>
-      <span class="block">Tax: ${{ store.calculateTax({...stateModel, quantity: 1}) }} </span>
-      <span class="block pb-3">Total price: ${{ store.calculateTaxedPrice({...stateModel, quantity: 1}) }} </span>
+      <span class="block">Tax: ${{ (stateModel.type.tax / 100 * stateModel.price).toFixed(2) }} </span>
+      <span class="block pb-3">Total price: ${{ ((stateModel.type.tax / 100 * stateModel.price) + stateModel.price).toFixed(2)  }} </span>
 
       <UButton type="submit">
         Save
