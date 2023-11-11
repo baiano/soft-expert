@@ -10,6 +10,7 @@ services:
       - ./frontend:/app/
       - publicFolder:/app/.output/public
       - /app/node_modules
+      - .env:/app/.env
     networks:
       - webapp_network
   server:
@@ -23,6 +24,7 @@ services:
     volumes:
       - ./backend:/app/api
       - ./frontend:/app/frontend
+      - ./.env:/app/api/.env
       - /app/api/vendor
     networks:
       - webapp_network

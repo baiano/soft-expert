@@ -48,15 +48,28 @@ RUN set -eux; \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN set -eux; \
-    # Install the PHP pdo_pgsql extention
     docker-php-ext-install pdo_pgsql \
-    && docker-php-ext-install zip; 
+    && docker-php-ext-install zip \ 
+    && docker-php-ext-install mbstring;
+
+
+# Install Xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Configure Xdebug
+RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
     
 WORKDIR /app/api
 
 COPY ./backend .
 
 COPY ./backend/composer.* ./
+
+COPY ./.env ./api/
 
 RUN composer install
 
