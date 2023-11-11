@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
 
 definePageMeta({
   layout: 'guest',
 })
 
 const store = useUserStore()
-const { registerModalIsOpen, userLogin } = storeToRefs(store)
+const { registerModalIsOpen, userLogin, forgotPasswordModalIsOpen } = storeToRefs(store)
 
 const validate = (state: any): FormError[] => {
   const errors = []
@@ -14,6 +16,15 @@ const validate = (state: any): FormError[] => {
   if (!state.password) { errors.push({ path: 'password', message: 'Required' }) }
   return errors
 }
+
+onMounted(() => {
+  onAuthStateChanged(getAuth(), (user) => {
+    console.log('user', user)
+    if (user) {
+      useRouter().push('/')
+    }
+  })
+})
 </script>
 <template>
   <!-- vertical center in middle -->
@@ -42,6 +53,9 @@ const validate = (state: any): FormError[] => {
       <UModal v-model="registerModalIsOpen">
         <RegisterFormModal />
       </UModal>
+      <UModal v-model="forgotPasswordModalIsOpen">
+        <RegisterForgotPasswordRequest />
+      </UModal>
       <template #footer>
         <div class="flex justify-between items-center">
           <div>
@@ -49,9 +63,9 @@ const validate = (state: any): FormError[] => {
               Sign Up
             </span>
             <span class="mx-2">|</span>
-            <ULink to="/forgot-password">
+            <span @click="forgotPasswordModalIsOpen = true">
               Forgot Password?
-            </ULink>
+            </span>
           </div>
         </div>
       </template>

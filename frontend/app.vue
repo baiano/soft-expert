@@ -1,3 +1,6 @@
 <template>
-  <NuxtLayout />
+  <div>
+    <NuxtLayout />
+    <FirebaseClient />
+  </div>
 </template>

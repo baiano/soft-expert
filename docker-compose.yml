@@ -9,7 +9,9 @@ services:
     volumes:
       - ./frontend:/app/
       - publicFolder:/app/.output/public
+      - /app/.nuxt
       - /app/node_modules
+      - /app/.output
       - .env:/app/.env
     networks:
       - webapp_network
