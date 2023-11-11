@@ -20,12 +20,11 @@ onMounted(async () => {
   await initializeApp(firebaseConfig)
   const firebaseApp = await initializeApp(firebaseConfig)
   const auth = await getAuth(firebaseApp)
-  if (!auth.currentUser) {
-    useRouter().push('/login')
-  }
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     if (!user) {
       useRouter().push('/login')
+    } else {
+      useUserStore().token = await user.getIdToken()
     }
   })
 })

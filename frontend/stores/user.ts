@@ -13,6 +13,7 @@ export const useUserStore = defineStore('userStore', {
   state: () => ({
     registerModalIsOpen: false,
     forgotPasswordModalIsOpen: false,
+    token: '',
     userLogin: {
       email: '',
       password: '',

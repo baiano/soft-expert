@@ -143,7 +143,7 @@ export const useOrdersStore = defineStore('ordersStore', {
       return acc
     },
     async fetchOrders () {
-      const orders = await $fetch(useConfigStore().apiUrl + '/orders')
+      const orders = await useCustomFetch(useConfigStore().apiUrl + '/orders')
       this.orders = orders
     },
     async getOrder (id) {
