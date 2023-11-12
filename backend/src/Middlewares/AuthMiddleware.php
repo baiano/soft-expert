@@ -9,15 +9,22 @@ class AuthMiddleware implements IMiddleware {
 
     public function handle(Request $request): void 
     {
-        $token = $request->getHeader('Authorization');
-        $token = str_replace('Bearer ', '', $token ?? '');
-        $firebaseService = new FirebaseService();
-        $uid = $firebaseService->verifyIdToken($token);
-        if (!$uid) {
+        try {
+            $token = $request->getHeader('Authorization');
+            $token = str_replace('Bearer ', '', $token ?? '');
+            $firebaseService = new FirebaseService();
+            $uid = $firebaseService->verifyIdToken($token);
+            if (!$uid) {
+                response()->httpCode(401);
+                response()->json([
+                    'message' => 'Unauthorized'
+                ]);
+            }
+        } catch (err) {
             response()->httpCode(401);
-            response()->json([
-                'message' => 'Unauthorized'
-            ]);
+                response()->json([
+                    'message' => 'Unauthorized'
+                ]);
         }
         // $request->setRewriteUrl(url('user.login'));
     }

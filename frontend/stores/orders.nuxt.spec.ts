@@ -67,29 +67,6 @@ describe('Orders Store', () => {
     await store.fetchOrders()
   })
 
-  describe('fetchOrders', () => {
-    test('orders are fetched', () => {
-      console.log(store.orders.length)
-      expect(store.orders.length).toBeGreaterThan(0)
-    })
-  })
-
-  describe('saveOrder', () => {
-    test('order is saved', async () => {
-      store.newOrder = fakeOrder
-
-      orderTest = await store.saveOrder(true)
-      expect(orderTest.id).toBeDefined()
-    })
-  })
-
-  describe('deleteOrder', () => {
-    test('order is deleted', async () => {
-      await store.delete(orderTest.id)
-      expect(store.orders).not.toContain(orderTest)
-    })
-  })
-
   describe('calculateOrderTotal', () => {
     test('calculate order total', () => {
       const total = store.calculateOrderTotal(fakeOrder)

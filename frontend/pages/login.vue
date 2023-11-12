@@ -18,10 +18,11 @@ const validate = (state: any): FormError[] => {
 }
 
 onMounted(() => {
-  onAuthStateChanged(getAuth(), (user) => {
+  onAuthStateChanged(getAuth(), async (user) => {
     console.log('user', user)
     if (user) {
       useRouter().push('/')
+      useUserStore().token = await user.getIdToken()
     }
   })
 })

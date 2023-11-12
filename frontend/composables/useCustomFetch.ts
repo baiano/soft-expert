@@ -1,9 +1,13 @@
 import type { UseFetchOptions } from 'nuxt/app'
 import { defu } from 'defu'
 
-export function useCustomFetch<T> (url: string | (() => string), options: UseFetchOptions<T> = {}) {
-  const store = useUserStore()
+export async function useCustomFetch<T> (url: string | (() => string), options: UseFetchOptions<T> = {}) {
   const configStore = useConfigStore()
+  const { $auth } = useNuxtApp()
+  const token = (await $auth?.currentUser?.getIdToken()) ?? useUserStore().token 
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  }
 
   const defaults: UseFetchOptions<T> = {
     baseURL: configStore.apiUrl ?? 'http://localhost:8080/api',
@@ -14,12 +18,10 @@ export function useCustomFetch<T> (url: string | (() => string), options: UseFet
     key: url,
 
     // set user token if connected
-    headers: store.token
-      ? { Authorization: `Bearer ${store.token}` }
-      : {},
+    headers,
 
     onResponse (_ctx) {
-      // _ctx.response._data = new myBusinessResponse(_ctx.response._data)
+      // _ctx.response._data = _ctx.response.data
     },
 
     onResponseError (_ctx) {
@@ -29,6 +31,6 @@ export function useCustomFetch<T> (url: string | (() => string), options: UseFet
 
   // for nice deep defaults, please use unjs/defu
   const params = defu(options, defaults)
-
-  return useFetch(url, params)
+  const result = await useFetch(url, params)
+  return result.data
 }

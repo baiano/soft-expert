@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+const { $auth } = useNuxtApp()
+
+onMounted(() => {
+  $auth.onAuthStateChanged((user) => {
+    if (!user) {
+      useRouter().push('/login')
+    }
+  })
+})
+</script>
 <template>
   <div class="min-h-screen">
     <Navbar />

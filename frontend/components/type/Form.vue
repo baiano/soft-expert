@@ -7,7 +7,7 @@ const stateModel = computed(() => {
     return newType.value
   } else {
     const typeId = useRoute().params.id
-    const type = store.types.filter(type => type.id == typeId)
+    const type = store.types?.filter(type => type.id == typeId)
     return type[0]
   }
 })

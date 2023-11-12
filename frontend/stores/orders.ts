@@ -71,10 +71,10 @@ export const useOrdersStore = defineStore('ordersStore', {
   }),
   getters: {
     getOrdersFiltered (state) {
-      if (typeof state.orders.filter !== 'function') { return [] }
+      if (typeof state.orders?.filter !== 'function') { return [] }
       const configStore = useConfigStore()
       // filter if order.product.product contains configStore.searchTerm
-      return state.orders.filter(order => order.products?.some((row) => {
+      return state.orders?.filter(order => order.products?.some((row) => {
         return row.product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase())
       }
 
@@ -96,7 +96,7 @@ export const useOrdersStore = defineStore('ordersStore', {
       ]
     },
     async saveOrder (testing = false) {
-      const order = await $fetch(useConfigStore().apiUrl + '/orders', {
+      const order = await useCustomFetch(useConfigStore().apiUrl + '/orders', {
         method: 'POST',
         body: JSON.stringify(this.newOrder),
       })
@@ -144,14 +144,14 @@ export const useOrdersStore = defineStore('ordersStore', {
     },
     async fetchOrders () {
       const orders = await useCustomFetch(useConfigStore().apiUrl + '/orders')
-      this.orders = orders
+      this.orders = orders.value
     },
     async getOrder (id) {
-      const order = await $fetch(useConfigStore().apiUrl + '/order/' + id)
+      const order = await useCustomFetch(useConfigStore().apiUrl + '/order/' + id)
       return order
     },
     async delete (id) {
-      const isDeleted = await $fetch(useConfigStore().apiUrl + '/order/' + id, {
+      const isDeleted = await useCustomFetch(useConfigStore().apiUrl + '/order/' + id, {
         method: 'DELETE',
       })
       const index = this.orders.findIndex(order => order.id === id)
@@ -160,6 +160,6 @@ export const useOrdersStore = defineStore('ordersStore', {
     },
   },
   persist: {
-    paths: ['orders'],
+    // paths: ['orders'],
   },
 })

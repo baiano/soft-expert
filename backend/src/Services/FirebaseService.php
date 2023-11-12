@@ -2,6 +2,7 @@
 namespace Backend\Services;
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class FirebaseService
 {
@@ -34,28 +35,28 @@ class FirebaseService
         try {
             // Decode the ID token without verification to extract header
             $decodedHeader = JWT::jsonDecode(JWT::urlsafeB64Decode(explode('.', $idToken)[0]), true);
-
+    
             // Verify the algorithm
-            if (!isset($decodedHeader['alg']) || $decodedHeader['alg'] !== 'RS256') {
+            if (!isset($decodedHeader->alg) || $decodedHeader->alg !== 'RS256') {
                 throw new \Exception('Invalid algorithm');
             }
-
             // Fetch public keys from Google
             $publicKeys = $this->fetchPublicKeys();
-
-            // Verify the signature using the appropriate public key
-            $decodedToken = JWT::decode($idToken, $publicKeys[$decodedHeader['kid']], ['RS256']);
-
+    
+            // Decode the token as an associative array
+            $headers = new \stdClass();
+            $decodedTokenArray = (array)JWT::decode($idToken, new Key($publicKeys[$decodedHeader->kid], 'RS256'), $headers);
             // Verify other claims
-            $this->verifyClaims($decodedToken);
-
+            $this->verifyClaims((object)$decodedTokenArray);
             // Return the UID (subject) if verification is successful
-            return $decodedToken->sub;
+            return $decodedTokenArray['sub'];
         } catch (\Exception $e) {
             // Handle verification errors
-            return null;
+            return false;
         }
     }
+    
+
 
     private function fetchPublicKeys(): array
     {
@@ -64,9 +65,8 @@ class FirebaseService
 
         $publicKeys = [];
         foreach ($keys as $kid => $key) {
-            $publicKeys[$kid] = '-----BEGIN CERTIFICATE-----' . PHP_EOL . $key . PHP_EOL . '-----END CERTIFICATE-----';
+            $publicKeys[$kid] = $key;
         }
-
         return $publicKeys;
     }
 
@@ -74,29 +74,36 @@ class FirebaseService
     {
         $now = time();
 
+        // Verify expiration time (exp)
         if (!isset($decodedToken->exp) || $decodedToken->exp <= $now) {
             throw new \Exception('Token has expired');
         }
 
+        // Verify issued-at time (iat)
         if (!isset($decodedToken->iat) || $decodedToken->iat > $now) {
             throw new \Exception('Invalid issued-at time');
         }
 
+        // Verify audience (aud)
         if (!isset($decodedToken->aud) || $decodedToken->aud !== $this->projectId) {
             throw new \Exception('Invalid audience');
         }
 
+        // Verify issuer (iss)
         $expectedIssuer = "https://securetoken.google.com/{$this->projectId}";
         if (!isset($decodedToken->iss) || $decodedToken->iss !== $expectedIssuer) {
             throw new \Exception('Invalid issuer');
         }
 
+        // Verify subject (sub)
         if (!isset($decodedToken->sub) || empty($decodedToken->sub)) {
             throw new \Exception('Invalid subject');
         }
 
+        // Verify authentication time (auth_time)
         if (!isset($decodedToken->auth_time) || $decodedToken->auth_time > $now) {
             throw new \Exception('Invalid authentication time');
         }
     }
+
 }

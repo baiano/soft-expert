@@ -4,9 +4,10 @@ import {
   // GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
   // sendSignInLinkToEmail
   // sendPasswordResetEmail
+  signOut
 } from 'firebase/auth'
 
 export const useUserStore = defineStore('userStore', {
@@ -32,21 +33,24 @@ export const useUserStore = defineStore('userStore', {
   actions: {
     async createUser (event: FormSubmitEvent<any>) {
       try {
-        await createUserWithEmailAndPassword(getAuth(), this.userToRegister.email, this.userToRegister.password)
+        const { $auth } = useNuxtApp()
+        await createUserWithEmailAndPassword($auth, this.userToRegister.email, this.userToRegister.password)
       } catch (err) {
         useToast().add({ title: 'Error', description: err.message, status: 'error' })
       }
     },
     async loginUser (event: FormSubmitEvent<any>) {
       try {
-        await signInWithEmailAndPassword(getAuth(), this.userLogin.email, this.userLogin.password)
+        const { $auth } = useNuxtApp()
+        await signInWithEmailAndPassword($auth, this.userLogin.email, this.userLogin.password)
       } catch (err) {
         useToast().add({ title: 'Error', description: err.message, status: 'error' })
       }
     },
     async recoverPassword (event: FormSubmitEvent<any>) {
       try {
-        await sendPasswordResetEmail(getAuth(), this.userToResetPassword.email)
+        const { $auth } = useNuxtApp()
+        await sendPasswordResetEmail($auth, this.userToResetPassword.email)
         useToast().add({ title: 'Success', description: 'Email sent', status: 'success' })
         this.forgotPasswordModalIsOpen = false
         event.target.reset()
@@ -54,5 +58,15 @@ export const useUserStore = defineStore('userStore', {
         useToast().add({ title: 'Error', description: err.message, status: 'error' })
       }
     },
+    async logout () {
+      try {
+        await signOut($auth)
+      } catch (err) {
+        useToast().add({ title: 'Error', description: err.message, status: 'error' })
+      }
+    },
+  },
+  persist: {
+    paths: ['token'],
   },
 })
