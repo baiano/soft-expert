@@ -29,8 +29,8 @@ export const useTypesStore = defineStore('typesStore', {
       return state.types.map(type => type.type)
     },
     getTypesFiltered (state) {
+      if (typeof state.types?.filter !== 'function') { return [] }
       const configStore = useConfigStore()
-      if (typeof state.types.filter !== 'function') { return [] }
       return state.types?.filter(type => type.type?.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
     },
     getTypeFromUrl (state) {
@@ -53,11 +53,11 @@ export const useTypesStore = defineStore('typesStore', {
       ]
     },
     async fetchTypes () {
-      const types = await $fetch(useConfigStore().apiUrl + '/types')
-      this.types = types
+      const types = await useCustomFetch(useConfigStore().apiUrl + '/types')
+      this.types = types.value
     },
     async saveType () {
-      const type = await $fetch(useConfigStore().apiUrl + '/types', {
+      const type = await useCustomFetch(useConfigStore().apiUrl + '/types', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,22 +72,20 @@ export const useTypesStore = defineStore('typesStore', {
       useRouter().push('/types')
     },
     async delete (id) {
-      await $fetch(useConfigStore().apiUrl + '/type/' + id, {
+      await useCustomFetch(useConfigStore().apiUrl + '/type/' + id, {
         method: 'DELETE',
       })
       const index = this.types.findIndex(type => type.id === id)
       this.types.splice(index, 1)
     },
     async update (typeUpdated) {
-      const type = await $fetch(useConfigStore().apiUrl + '/type/' + typeUpdated.id, {
+      await useCustomFetch(useConfigStore().apiUrl + '/type/' + typeUpdated.id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(typeUpdated),
       })
-      const index = this.types.findIndex(type => type.id === typeUpdated.id)
-      this.types[index] = type
       this.newType = {
         type: '',
         tax: 0,
@@ -96,6 +94,6 @@ export const useTypesStore = defineStore('typesStore', {
     },
   },
   persist: {
-    paths: ['types'],
+    // paths: ['types'],
   },
 })

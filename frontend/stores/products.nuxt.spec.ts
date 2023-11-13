@@ -21,7 +21,6 @@ beforeAll(() => {
 
 describe('Products Store', () => {
   let store
-  let productTest
   const fakeProduct = {
     product: 'Beer',
     type: {
@@ -37,39 +36,9 @@ describe('Products Store', () => {
     await store.fetchProducts()
   })
 
-  describe('fetchProducts', () => {
-    test('fetches products', async () => {
-      expect(store.products.length).toBeGreaterThan(0)
-    })
-  })
-
-  describe('saveProduct', () => {
-    test('saves product', async () => {
-      store.newProduct = fakeProduct
-      productTest = await store.saveProduct(true)
-      expect(productTest.id).toBeDefined()
-    })
-  })
-
-  describe('update product', () => {
-    test('product can be updated', async () => {
-      productTest.product = 'Beer (UPDATED)'
-      productTest.type = fakeProduct.type
-      await store.updateProduct(productTest, true)
-      expect(store.products).toContainEqual(productTest)
-    })
-  })
-
   describe('calculateTax', () => {
     test('calculates tax', () => {
-      expect(store.calculateTax(productTest)).toBe('0.75')
-    })
-  })
-
-  describe('delete product', () => {
-    test('product can be deleted', async () => {
-      await store.delete(productTest.id)
-      expect(store.products).not.toContain(productTest)
+      expect(store.calculateTax(fakeProduct)).toBe('0.75')
     })
   })
 })

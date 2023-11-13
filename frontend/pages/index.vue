@@ -17,8 +17,8 @@ onMounted(async () => {
 
 <template>
   <div class="grid grid-cols-2 gap-5 justify-center">
-    <DashboardInfoBox :icon="'i-heroicons-shopping-cart-20-solid'" :number="products.length" title="Total Products:" />
-    <DashboardInfoBox :icon="'i-heroicons-shopping-cart-20-solid'" :number="orders.length" title="Orders:" />
+    <DashboardInfoBox :icon="'i-heroicons-shopping-cart-20-solid'" :number="products?.length" title="Total Products:" />
+    <DashboardInfoBox :icon="'i-heroicons-shopping-cart-20-solid'" :number="orders?.length" title="Orders:" />
 
   </div>
 </template>

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { getAuth, signOut } from 'firebase/auth'
+
 const store = useConfigStore()
 const { isNavbarVisible } = storeToRefs(store)
 const productsMenu = ref([
@@ -120,8 +122,8 @@ const isTypePage = computed(() => {
           </li>
           <li>
             <ULink
-              to="/logout"
               inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              @click="signOut(getAuth())"
             >
               <UIcon class="hidden md:block pr-7 text-2xl text-red-400 font-bold" name="i-solar-logout-broken" title="Logout" />
               <!-- show only on small screens -->
