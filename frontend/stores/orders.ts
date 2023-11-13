@@ -71,14 +71,18 @@ export const useOrdersStore = defineStore('ordersStore', {
   }),
   getters: {
     getOrdersFiltered (state) {
-      if (typeof state.orders.filter !== 'function') { return [] }
+      if (typeof state.orders?.filter !== 'function') { return [] }
       const configStore = useConfigStore()
-      // filter if order.product.product contains configStore.searchTerm
-      return state.orders.filter(order => order.products?.some((row) => {
-        return row.product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase())
-      }
-
-      ))
+      // filter orders that contains products
+      return state.orders?.filter(order => order.products?.some((row) => {
+        return row
+      })).slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
+    },
+    getItemsCount (state): number {
+      if (typeof state.orders?.filter !== 'function') { return 0 }
+      return state.orders?.filter(order => order.products?.some((row) => {
+        return row
+      })).length
     },
 
   },
@@ -96,7 +100,7 @@ export const useOrdersStore = defineStore('ordersStore', {
       ]
     },
     async saveOrder (testing = false) {
-      const order = await $fetch(useConfigStore().apiUrl + '/orders', {
+      const order = await useCustomFetch(useConfigStore().apiUrl + '/orders', {
         method: 'POST',
         body: JSON.stringify(this.newOrder),
       })
@@ -122,7 +126,9 @@ export const useOrdersStore = defineStore('ordersStore', {
       // calculate considering price * quantity + tax * quantity
       let acc = 0
       order.products.forEach((product) => {
-        acc += parseInt(product.quantity) * (parseFloat(product.product.price) + parseFloat(product.product.type.tax * product.product.price))
+        if (product.product.type) {
+          acc += parseInt(product.quantity) * (parseFloat(product.product.price) + parseFloat(product.product.type.tax * product.product.price))
+        }
       })
       return acc
     },
@@ -130,7 +136,10 @@ export const useOrdersStore = defineStore('ordersStore', {
       // calculate considering tax * quantity
       let acc = 0
       order.products.forEach((product) => {
-        acc += parseInt(product.quantity) * parseFloat(product.product.type.tax * product.product.price)
+        if (product.product.type) {
+          acc += parseInt(product.quantity) * parseFloat(product.product.type.tax * product.product.price)
+        }
+        // acc += parseInt(product.quantity) * parseFloat(product.product.type.tax * product.product.price)
       })
       return acc
     },
@@ -143,15 +152,15 @@ export const useOrdersStore = defineStore('ordersStore', {
       return acc
     },
     async fetchOrders () {
-      const orders = await $fetch(useConfigStore().apiUrl + '/orders')
-      this.orders = orders
+      const orders = await useCustomFetch(useConfigStore().apiUrl + '/orders')
+      this.orders = orders.value
     },
     async getOrder (id) {
-      const order = await $fetch(useConfigStore().apiUrl + '/order/' + id)
-      return order
+      const order = await useCustomFetch(useConfigStore().apiUrl + '/order/' + id)
+      return order.value
     },
     async delete (id) {
-      const isDeleted = await $fetch(useConfigStore().apiUrl + '/order/' + id, {
+      const isDeleted = await useCustomFetch(useConfigStore().apiUrl + '/order/' + id, {
         method: 'DELETE',
       })
       const index = this.orders.findIndex(order => order.id === id)
@@ -160,6 +169,6 @@ export const useOrdersStore = defineStore('ordersStore', {
     },
   },
   persist: {
-    paths: ['orders'],
+    // paths: ['orders'],
   },
 })
