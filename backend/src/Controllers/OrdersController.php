@@ -62,7 +62,8 @@ class OrdersController {
       foreach ($order->order_products as $productIndex => $order_product) {
         $result[$index]['products'][$productIndex]['quantity'] = $order_product->quantity;
         $result[$index]['products'][$productIndex]['product'] = $order_product->product->to_array();
-        $result[$index]['products'][$productIndex]['product']['type'] = $order_product->product->type->to_array();
+        if ($order_product->product->type)
+          $result[$index]['products'][$productIndex]['product']['type'] = $order_product->product->type->to_array();
       }
     }
     return $result;

@@ -29,9 +29,9 @@ export const useTypesStore = defineStore('typesStore', {
       return state.types.map(type => type.type)
     },
     getTypesFiltered (state) {
-      if (typeof state.types.data.filter !== 'function') { return [] }
+      if (typeof state.types?.filter !== 'function') { return [] }
       const configStore = useConfigStore()
-      return state.types?.data.filter(type => type.type?.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+      return state.types?.filter(type => type.type?.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
     },
     getTypeFromUrl (state) {
       const id = parseInt(useRoute().params.id)
@@ -54,7 +54,7 @@ export const useTypesStore = defineStore('typesStore', {
     },
     async fetchTypes () {
       const types = await useCustomFetch(useConfigStore().apiUrl + '/types')
-      this.types = types
+      this.types = types.value
     },
     async saveType () {
       const type = await useCustomFetch(useConfigStore().apiUrl + '/types', {
@@ -79,15 +79,13 @@ export const useTypesStore = defineStore('typesStore', {
       this.types.splice(index, 1)
     },
     async update (typeUpdated) {
-      const type = await useCustomFetch(useConfigStore().apiUrl + '/type/' + typeUpdated.id, {
+      await useCustomFetch(useConfigStore().apiUrl + '/type/' + typeUpdated.id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(typeUpdated),
       })
-      const index = this.types.findIndex(type => type.id === typeUpdated.id)
-      this.types[index] = type
       this.newType = {
         type: '',
         tax: 0,

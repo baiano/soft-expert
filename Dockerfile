@@ -41,6 +41,7 @@ RUN set -eux; \
             libxpm-dev \
             libmcrypt-dev \
             libonig-dev \
+            libxml2-dev \
             zip \
             unzip \
             libzip-dev; \
@@ -50,7 +51,8 @@ RUN set -eux; \
 RUN set -eux; \
     docker-php-ext-install pdo_pgsql \
     && docker-php-ext-install zip \ 
-    && docker-php-ext-install mbstring;
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-install xml;
 
 
 # Install Xdebug

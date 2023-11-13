@@ -50,21 +50,20 @@ export const useProductsStore = defineStore('productsStore', {
     },
     getProductsFiltered (state): {}[] {
       const configStore = useConfigStore()
-      if (typeof state.products.data.filter !== 'function') { return [] }
-      return state.products.data
-        .filter((product) => {
+      if (typeof state.products?.filter !== 'function') { return [] }
+      return state.products?.filter((product) => {
         // product includes search term or types include search term
-          return product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase()) || product.types?.some(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
-        })
+        return product.product?.toLowerCase().includes(configStore.searchTerm.toLowerCase()) || product.types?.some(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+      })
         .slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage)
     },
     getItemsCount (state): number {
       const configStore = useConfigStore()
 
       if (configStore.searchTerm !== '') {
-        return state.products.data.filter(product => product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase())).length
+        return state.products?.filter(product => product.product.toLowerCase().includes(configStore.searchTerm.toLowerCase())).length
       }
-      return state.products.data.length
+      return state.products?.length
     },
     getProductFromUrl (state) {
       const id = parseInt(useRoute().params.id)
@@ -105,7 +104,7 @@ export const useProductsStore = defineStore('productsStore', {
     },
     async fetchProducts () {
       const products = await useCustomFetch(useConfigStore().apiUrl + '/products')
-      this.products = products
+      this.products = products.value
     },
     async saveProduct (testing = false) {
       const product = await useCustomFetch(useConfigStore().apiUrl + '/products', {
@@ -128,12 +127,12 @@ export const useProductsStore = defineStore('productsStore', {
       return isDeleted
     },
     async updateProduct (productToUpdate, testing = false) {
-      const product = await useCustomFetch(useConfigStore().apiUrl + '/product/' + productToUpdate.id, {
+      const productUpdated = await useCustomFetch(useConfigStore().apiUrl + '/product/' + productToUpdate.id, {
         method: 'PUT',
         body: JSON.stringify(!testing ? this.getProductFromUrl : productToUpdate),
       })
-      const index = this.products.findIndex(product => product.id === productToUpdate.id)
-      this.products[index] = product
+      // const index = this.products.findIndex(product => product.id === productUpdated.value.id)
+      this.products.find(product => product.id === productUpdated.value.id).product = productUpdated.value.product
       if (testing) {
         this.products[index].type = productToUpdate.type
         return product

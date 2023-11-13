@@ -40,9 +40,9 @@ function calculateTax () {
   }
   if (stateModel.value.type?.tax) {
     if (stateModel.value.type?.tax > 1) {
-      tax = stateModel.value.type?.tax / 100
+      tax = (stateModel.value.type?.tax / 100) * stateModel.value.price
     } else {
-      tax = stateModel.value.type?.tax 
+      tax = stateModel.value.type?.tax * stateModel.value.price
     }
   }
   return tax
@@ -73,7 +73,7 @@ function calculateTax () {
         <UInput v-if="stateModel" v-model.number="stateModel.price" />
       </UFormGroup>
       <span class="block">Tax: ${{ calculateTax().toFixed(2) }} </span>
-      <span class="block pb-3">Total price: ${{ (parseFloat(calculateTax()) + stateModel.price).toFixed(2) }} </span>
+      <span class="block pb-3">Total price: ${{ parseFloat(calculateTax() + stateModel.price).toFixed(2) }} </span>
 
       <UButton type="submit">
         Save

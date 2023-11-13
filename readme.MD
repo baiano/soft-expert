@@ -33,6 +33,7 @@ The seed is located in `db/seed/seed.sql`and is automatically imported when dock
 
 ## Tests
 There are frontend tests, covering basic operations as CRUD. To run, you will need to install the dependencies with `npm ci` and run `npx vitest` in the frontend folder (Host Machine). Check your node version, it must be 18 or higher.
+To run the php tests, you can `docker compose exec server php vendor/bin/phpunit /app` in the root folder.
 
 ## Technologies
 ### Backend
@@ -40,23 +41,19 @@ There are frontend tests, covering basic operations as CRUD. To run, you will ne
 - Node 18
 - Active Records
 - Php Simple Router
+- PHP Unit
 ### Frontend
 - Vue 3
 - Pinia
 - Nuxt 3
 - Tailwind
 - Nuxt UI
+- Vitest
 ### Database
 - Postgres 11.1
 ### Others
 - Docker
-- Vitest
-
-## Things i would like to improve
-- Add Backend tests
-- Implement Firebase to handle auth
-- Finish the AuthMiddleware.php to insert the firebase auth
-
+- Firebase/auth
 
 ## Contact
 If you have any questions, please contact me at `guilhermelchaves@gmail.com` or leave a message in [my personal site](https://limachaves.com).

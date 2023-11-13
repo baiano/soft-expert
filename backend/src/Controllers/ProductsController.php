@@ -46,7 +46,8 @@ class ProductsController {
   private function formatProducts($products) {
     foreach ($products as $index => $product) {
       $result[$index] = $product->to_array();
-      $result[$index]['type'] = $product->type->to_array();
+      if ($product->type)
+        $result[$index]['type'] = $product->type->to_array();
     }
     return $result;
   }
