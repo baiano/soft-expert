@@ -11,13 +11,13 @@ class Product extends Model
         'type' => ['foreign_key' => 'id_type']
     ];
 
-    static $validates_presence_of = [
+    static array $validates_presence_of = [
         ['product'],
         ['price'],
         ['id_type']
     ];
 
-    static $validates_numericality_of = [
+    static array $validates_numericality_of = [
         ['price', 'greater_than' => 0]
     ];
 
