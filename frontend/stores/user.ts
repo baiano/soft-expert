@@ -43,6 +43,7 @@ export const useUserStore = defineStore('userStore', {
       try {
         const { $auth } = useNuxtApp()
         await signInWithEmailAndPassword($auth, this.userLogin.email, this.userLogin.password)
+        useToast().add({ title: 'Success', description: 'Logged in' })
       } catch (err) {
         useToast().add({ title: 'Error', description: err.message, color: 'red' })
       }

@@ -64,7 +64,7 @@ onMounted(() => {
               Sign Up
             </span>
             <span class="mx-2">|</span>
-            <span @click="forgotPasswordModalIsOpen = true">
+            <span class="cursor-pointer" @click="forgotPasswordModalIsOpen = true">
               Forgot Password?
             </span>
           </div>
