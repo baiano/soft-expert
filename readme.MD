@@ -8,6 +8,8 @@ cd soft-expert
 docker compose up -d --build
 ```
 
+Then navigate to `http://localhost:8080` to see the app running.
+
 It should work out of the box, but if you find any errors, check the permissions of the files and folders to match your docker user. If needed, you can run the containers as root, but it is not recommended. Check below for more information:
 
 ## Structure
