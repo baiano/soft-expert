@@ -60,7 +60,7 @@ onMounted(() => {
       <template #footer>
         <div class="flex justify-between items-center">
           <div>
-            <span class="text-primary" @click="registerModalIsOpen = true">
+            <span class="cursor-pointer text-primary" @click="registerModalIsOpen = true">
               Sign Up
             </span>
             <span class="mx-2">|</span>
