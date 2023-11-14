@@ -10,7 +10,7 @@ class Db {
         $this->conn = null;
         $cfg = Config::instance();
         $connectionParams = [
-            'development' => 'pgsql://postgres:postgres@pgsql/postgres',
+            'development' => 'pgsql://postgres:postgres@localhost/postgres',
             'test' => 'pgsql://postgres:postgres@localhost/postgres',
             'production' => 'pgsql://postgres:postgres@pgsql/postgres'
         ];

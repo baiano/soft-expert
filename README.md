@@ -22,12 +22,12 @@ It should work out of the box, but if you find any errors, check the permissions
 
 ## Backend
 
-If you want to run the backend in host machine mode, you must run `composer install` and configure the database in `backend/src/Services/Db.php`
+If you want to run the backend in host machine mode, you must run `composer install`. By default, you can pass the var `APP_ENV=development` and the backend will look for a database on localhost, but you can configure the database options on `backend/src/Services/Db.php`. Then you can run `APP_ENV=development php -S localhost:8080` to start the backend.
 If needed, configure the `cors.php` file in `backend/src/cors.php`
 
 ## Frontend
 Frontend was built on node 18.
-To install, go to frontend folder and use `npm ci`. Then you can `npm run dev`. If you prefer, there is a build on `frontend_build.zip` file.
+To install, go to frontend folder and use `npm ci`. Then you can `npm run dev`. If you prefer, there is a build on `frontend_build.zip` file. Just unzip and serve the static files. It is pre-built to use its own domain and port 8080 as backend. If you want to change it, you need to edit the `frontend/stores/config.ts` file, in the getter apiUrl, and generate a new build.
 
 ## Database
 The database is Postgres and is configured in `docker-compose.yml` and `db/Dockerfile` files.
@@ -59,5 +59,8 @@ To run the php tests, you can `docker compose exec server php vendor/bin/phpunit
 
 ## Contact
 If you have any questions, please contact me at `guilhermelchaves@gmail.com` or leave a message in [my personal site](https://limachaves.com).
+
+### PS
+In a real world application, .env would not be versioned.
 
 

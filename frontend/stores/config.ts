@@ -6,6 +6,7 @@ export const useConfigStore = defineStore('configStore', {
     searchTerm: '',
   }),
   getters: {
+    // apiUrl: () => 'http://localhost:8080/api',
     apiUrl: () => window.location.origin.split(':')[0] + ':' + window.location.origin.split(':')[1] + ':8080' + '/api',
   },
   actions: {
