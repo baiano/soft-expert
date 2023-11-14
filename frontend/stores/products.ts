@@ -116,6 +116,7 @@ export const useProductsStore = defineStore('productsStore', {
       }
       this.products.push(product)
       this.resetNewUser()
+      useToast().add({ title: 'Success', description: 'Product created' })
       useRouter().push('/products')
     },
     async delete (id) {
@@ -124,6 +125,7 @@ export const useProductsStore = defineStore('productsStore', {
       })
       const index = this.products.findIndex(product => product.id === id)
       this.products.splice(index, 1)
+      useToast().add({ title: 'Success', description: 'Product deleted' })
       return isDeleted
     },
     async updateProduct (productToUpdate, testing = false) {
@@ -138,6 +140,7 @@ export const useProductsStore = defineStore('productsStore', {
         return product
       }
       this.resetNewUser()
+      useToast().add({ title: 'Success', description: 'Product updated' })
       useRouter().push('/products')
     },
     resetNewUser () {
