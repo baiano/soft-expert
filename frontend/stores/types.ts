@@ -69,6 +69,7 @@ export const useTypesStore = defineStore('typesStore', {
         type: '',
         tax: 0,
       }
+      useToast().add({ title: 'Success', description: 'Type created' })
       useRouter().push('/types')
     },
     async delete (id) {
@@ -76,6 +77,7 @@ export const useTypesStore = defineStore('typesStore', {
         method: 'DELETE',
       })
       const index = this.types.findIndex(type => type.id === id)
+      useToast().add({ title: 'Success', description: 'Type deleted' })
       this.types.splice(index, 1)
     },
     async update (typeUpdated) {
@@ -90,6 +92,7 @@ export const useTypesStore = defineStore('typesStore', {
         type: '',
         tax: 0,
       }
+      useToast().add({ title: 'Success', description: 'Type updated' })
       useRouter().push('/types')
     },
   },

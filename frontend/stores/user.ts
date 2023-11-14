@@ -36,7 +36,7 @@ export const useUserStore = defineStore('userStore', {
         const { $auth } = useNuxtApp()
         await createUserWithEmailAndPassword($auth, this.userToRegister.email, this.userToRegister.password)
       } catch (err) {
-        useToast().add({ title: 'Error', description: err.message, status: 'error' })
+        useToast().add({ title: 'Error', description: err.message, color: 'red' })
       }
     },
     async loginUser (event: FormSubmitEvent<any>) {
@@ -44,25 +44,25 @@ export const useUserStore = defineStore('userStore', {
         const { $auth } = useNuxtApp()
         await signInWithEmailAndPassword($auth, this.userLogin.email, this.userLogin.password)
       } catch (err) {
-        useToast().add({ title: 'Error', description: err.message, status: 'error' })
+        useToast().add({ title: 'Error', description: err.message, color: 'red' })
       }
     },
     async recoverPassword (event: FormSubmitEvent<any>) {
       try {
         const { $auth } = useNuxtApp()
         await sendPasswordResetEmail($auth, this.userToResetPassword.email)
-        useToast().add({ title: 'Success', description: 'Email sent', status: 'success' })
+        useToast().add({ title: 'Success', description: 'Email sent' })
         this.forgotPasswordModalIsOpen = false
         event.target.reset()
       } catch (err) {
-        useToast().add({ title: 'Error', description: err.message, status: 'error' })
+        useToast().add({ title: 'Error', description: err.message, color: 'red' })
       }
     },
     async logout () {
       try {
         await signOut($auth)
       } catch (err) {
-        useToast().add({ title: 'Error', description: err.message, status: 'error' })
+        useToast().add({ title: 'Error', description: err.message, color: 'red' })
       }
     },
   },
