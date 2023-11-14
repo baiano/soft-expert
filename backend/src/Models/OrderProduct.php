@@ -13,7 +13,7 @@ class OrderProduct extends Model
         'product' => ['foreign_key' => 'id_product']
     ];
 
-    static $validates_numericality_of = [
+    static array $validates_numericality_of = [
         ['quantity', 'greater_than' => 0]
     ];
 }
