@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm ci
 
+COPY ../.env ./
+
 # RUN npm run generate
 
 # COPY . .

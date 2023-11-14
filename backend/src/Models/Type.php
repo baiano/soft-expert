@@ -6,6 +6,15 @@ use ActiveRecord\Model;
 class Type extends Model
 {
     static string $table_name = 'types';
+    
+    static $validates_numericality_of = [
+        ['tax', 'greater_than' => 0]
+    ];
+
+    static $validates_presence_of = [
+        ['type'],
+        ['tax']
+    ];
   
     
 }
