@@ -8,6 +8,8 @@ cd soft-expert
 docker compose up -d --build
 ```
 
+Then navigate to `http://localhost:8080` to see the app running.
+
 It should work out of the box, but if you find any errors, check the permissions of the files and folders to match your docker user. If needed, you can run the containers as root, but it is not recommended. Check below for more information:
 
 ## Structure
@@ -25,7 +27,7 @@ If needed, configure the `cors.php` file in `backend/src/cors.php`
 
 ## Frontend
 Frontend was built on node 18.
-To install, go to frontend folder and use `npm ci`. Then you can `npm run dev`.
+To install, go to frontend folder and use `npm ci`. Then you can `npm run dev`. If you prefer, there is a build on `frontend_build.zip` file.
 
 ## Database
 The database is Postgres and is configured in `docker-compose.yml` and `db/Dockerfile` files.
