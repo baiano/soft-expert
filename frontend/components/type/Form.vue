@@ -33,7 +33,7 @@ const validate = (): FormError[] => {
 
 <template>
   <section>
-    <UForm :validate="validate" :state="stateModel" @submit="onSubmit">
+    <UForm :validate="validate" :state="stateModel" @submit="props.submit">
       <UFormGroup class="pb-3" label="Type name" name="type">
         <UInput v-model="stateModel.type" maxlength="10" />
       </UFormGroup>

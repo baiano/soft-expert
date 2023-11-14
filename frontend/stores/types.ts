@@ -32,10 +32,18 @@ export const useTypesStore = defineStore('typesStore', {
       if (typeof state.types?.filter !== 'function') { return [] }
       const configStore = useConfigStore()
       return state.types?.filter(type => type.type?.toLowerCase().includes(configStore.searchTerm.toLowerCase()))
+      .slice((configStore.page - 1) * configStore.rowsPerPage, configStore.page * configStore.rowsPerPage) 
     },
     getTypeFromUrl (state) {
       const id = parseInt(useRoute().params.id)
       return state.types.find(type => type.id === id)
+    },
+    getItemsCount (state) {
+      const configStore = useConfigStore()
+      if (configStore.searchTerm !== '') {
+        return state.types?.filter(type => type.type.toLowerCase().includes(configStore.searchTerm.toLowerCase())).length
+      }
+      return state.types?.length
     },
   },
   actions: {

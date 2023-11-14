@@ -9,11 +9,6 @@ class Type extends Model
     static string $table_name = 'types';
 
     static array $validates_numericality_of = [
-        ['tax', 'greater_than' => 0]
-    ];
-
-    static array $validates_presence_of = [
-        ['type'],
-        ['tax']
+        'tax' => ['greater_than' => 0]
     ];
 }

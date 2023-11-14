@@ -15,6 +15,7 @@ onMounted(() => {
     <UContainer class="p-3 mt-3 grow">
       <NuxtPage />
     </UContainer>
+    <UNotifications />
     <Footer class="sticky top-[100vh]" />
   </div>
 </template>

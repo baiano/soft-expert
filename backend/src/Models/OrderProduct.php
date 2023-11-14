@@ -14,7 +14,7 @@ class OrderProduct extends Model
     ];
 
     static array $validates_numericality_of = [
-        ['quantity', 'greater_than' => 0]
+        'quantity' => ['greater_than' => 0]
     ];
 }
 
