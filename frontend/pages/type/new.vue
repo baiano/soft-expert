@@ -31,7 +31,7 @@ onMounted(() => {
         <h1>New Product Type</h1>
       </div>
     </div>
-    <TypeForm :action="'new'" @submit="onSubmit" />
+    <TypeForm :action="'new'" :submit="onSubmit" />
   </section>
 </template>
 

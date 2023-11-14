@@ -28,7 +28,7 @@ onMounted(() => {
         <h1>New Product</h1>
       </div>
     </div>
-    <ProductForm :validate="validate" :action="'new'" @submit="onSubmit" />
+    <ProductForm :action="'new'" :submit="onSubmit" />
   </section>
 </template>
 
