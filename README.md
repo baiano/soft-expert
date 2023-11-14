@@ -27,7 +27,7 @@ If needed, configure the `cors.php` file in `backend/src/cors.php`
 
 ## Frontend
 Frontend was built on node 18.
-To install, go to frontend folder and use `npm ci`. Then you can `npm run dev`.
+To install, go to frontend folder and use `npm ci`. Then you can `npm run dev`. If you prefer, there is a build on `frontend_build.zip` file.
 
 ## Database
 The database is Postgres and is configured in `docker-compose.yml` and `db/Dockerfile` files.
