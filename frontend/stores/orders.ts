@@ -112,6 +112,7 @@ export const useOrdersStore = defineStore('ordersStore', {
       this.newOrder = {
         products: [],
       }
+      useToast().add({ title: 'Success', description: 'Order created' })
       useRouter().push('/orders')
     },
     productsQuantity (products) {
