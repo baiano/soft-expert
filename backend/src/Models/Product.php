@@ -18,7 +18,7 @@ class Product extends Model
     ];
 
     static array $validates_numericality_of = [
-        ['price', 'greater_than' => 0]
+        'price' => ['greater_than' => 0]
     ];
 
     public function calculateTax() {
